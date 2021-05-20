@@ -27,9 +27,9 @@ def index():
 @app.route('/tables')
 def get_table():
     table_name = request.args.get('table')
-    query = f"select * from {table_name}"
+    query = f"select * from %s"
     with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
+        cursor.execute(query % (table_name,))
         result = [
             dict(
                 (cursor.description[i][0], value)
