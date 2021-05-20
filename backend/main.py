@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -14,9 +14,30 @@ def index():
     query = "select * from employees"
     with mysql.connection.cursor() as cursor:
         cursor.execute(query)
-        result = cursor.fetchall()
-    return jsonify(result)
+        result = [
+            dict(
+                (cursor.description[i][0], value)
+                for i, value in enumerate(row)
+            )
+            for row in cursor.fetchall()
+        ]
+    return jsonify({'data': result})
 
+
+@app.route('/tables')
+def get_table():
+    table_name = request.args.get('table')
+    query = f"select * from {table_name}"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = [
+            dict(
+                (cursor.description[i][0], value)
+                for i, value in enumerate(row)
+            )
+            for row in cursor.fetchall()
+        ]
+    return jsonify({'data': result})
 
 
 app.run('localhost', 5000)
