@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 
 import country
+import employees
 import utils
 from utils import cursor_result_to_json
 
@@ -15,7 +16,11 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
-    return jsonify({'data': utils.get_table(mysql, 'employees')})
+    query = "select * from country"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
 
 
 @app.route('/tables')
@@ -25,38 +30,99 @@ def get_table():
 
 
 ################################# Branchs
-################################# country
-################################# Employee
 # Select @app.route('/employees/delete')
-@app.route('/employees/delete')
-def delete_row():
-    id = request.args.get('id')
-    utils.delete_from_table()
+# @app.route('/employees/delete')
 
 
 # Update @app.route('/employees/delete')
 # Insert @app.route('/employees/delete')
+
+################################# Employee
+# Select
+@app.route('/employees/select')
+def employees_select():
+    query = "select * from employees"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
+
+
+# delete
+@app.route('/employees/delete')
+def delete_row():
+    id = request.args.get('id')
+    utils.delete_from_table(mysql, 'employees', id)
+    return 'success'
+
+
+# Update
+@app.route('/employees/update')
+def employees_update():
+    id = request.args.get('id')
+    name = request.args.get('name')
+    email = request.args.get('email')
+    salary = request.args.get('salary')
+    seniority = request.args.get('seniority')
+    branch_id = request.args.get('branch_id')
+    job = request.args.get('job')
+    employees.update(mysql, id, name, email, salary, seniority, branch_id, job)
+    return 'success'
+
+
+# Insert
+@app.route('/employees/insert')
 def employees_insert():
     name = request.args.get('name')
-    country.insert(name, mysql)
+    email = request.args.get('email')
+    salary = request.args.get('salary')
+    seniority = request.args.get('seniority')
+    branch_id = request.args.get('branch_id')
+    job = request.args.get('job')
+    employees.insert(mysql, name, email, salary, seniority, branch_id, job)
     return 'success'
 
 
 ################################# Country
 @app.route('/country/insert')
-def employees_insert():
+def country_insert():
     name = request.args.get('name')
-    country.insert(name, mysql)
+    country.insert(mysql, name)
     return 'success'
 
 
-################################# Country
+# Select @app.route('/employees/delete')
+# @app.route('/employees/delete')
 
-app.run('localhost', 5000)
+
+# Update @app.route('/employees/delete')
+# Insert @app.route('/employees/delete')
+
 
 ################################# manufac
+# Select @app.route('/employees/delete')
+# @app.route('/employees/delete')
+
+
+# Update @app.route('/employees/delete')
+# Insert @app.route('/employees/delete')
 
 
 ################################# manufac_ex
+# Select @app.route('/employees/delete')
+# @app.route('/employees/delete')
+
+
+# Update @app.route('/employees/delete')
+# Insert @app.route('/employees/delete')
 
 ################################# product
+# Select @app.route('/employees/delete')
+# @app.route('/employees/delete')
+
+
+# Update @app.route('/employees/delete')
+# Insert @app.route('/employees/delete')
+
+
+app.run('localhost', 5000)

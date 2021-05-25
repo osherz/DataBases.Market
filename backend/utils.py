@@ -20,4 +20,8 @@ def get_table(mysql: MySQL, table_name):
 
 
 def delete_from_table(mysql: MySQL, table_name, id):
-    pass
+    query = f"delete from {table_name} where id={id}"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor.fetchall())
+    return result
