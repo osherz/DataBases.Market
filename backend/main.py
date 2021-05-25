@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 from utils import cursor_result_to_json
-from backend import branchs, shareholder, country, employees, utils, product, product_in_branch, publicity
+from backend import branchs, shareholder, country, employees, utils, product, product_in_branch, publicity, \
+    manufacturer, manufacturer_expenses
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'freedb.tech'
@@ -156,28 +157,92 @@ def country_update():
     return 'success'
 
 
+# -------------------------------------- manufacturer --------------------------------------
 
-# -------------------------------------- manufac --------------------------------------
-# Select @app.route('/employees/delete')
-# @app.route('/employees/delete')
-
-
-# Update @app.route('/employees/delete')
-# Insert @app.route('/employees/delete')
-
-
-# -------------------------------------- manufac_ex --------------------------------------
-# Select @app.route('/employees/delete')
-# @app.route('/employees/delete')
+# Select
+@app.route('/manufacturer/select')
+def manufacturer_select():
+    query = "select * from manufacturer"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
 
 
-# Update @app.route('/employees/delete')
-# Insert @app.route('/employees/delete')
+# delete
+@app.route('/manufacturer/delete')
+def manufacturer_delete_row():
+    id = request.args.get('id')
+    utils.delete_from_table(mysql, "manufacturer", id)
+    return "success"
+
+
+# insert
+@app.route('/manufacturer/insert')
+def manufacturer_insert():
+    id = request.args.get('id')
+    countryid = request.args.get('countryid')
+    name = request.args.get('name')
+    manufacturer.insert(mysql, id, name, countryid)
+    return 'success'
+
+
+# Update
+@app.route('/manufacturer/update')
+def manufacturer_update():
+    id = request.args.get('id')
+    countryid = request.args.get('countryid')
+    name = request.args.get('name')
+    manufacturer.update(mysql, id, name, countryid)
+    return 'success'
+
+
+# -------------------------------------- manufacturer_expenses --------------------------------------
+
+# Select
+@app.route('/manufacturer_expenses/select')
+def manufacturer_expenses_select():
+    query = "select * from manufacturer_expenses"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
+
+
+# delete
+@app.route('/manufacturer_expenses/delete')
+def manufacturer_expenses_delete_row():
+    id = request.args.get('id')
+    utils.delete_from_table(mysql, "manufacturer_expenses", id)
+    return "success"
+
+
+# insert
+@app.route('/manufacturer_expenses/insert')
+def manufacturer_expenses_insert():
+    id = request.args.get('id')
+    manufacturer_id = request.args.get('manufacturer_id')
+    expenses = request.args.get('expenses')
+    date_of_expenses = request.args.get('date_of_expenses')
+    manufacturer_expenses.insert(mysql, id, manufacturer_id, expenses,date_of_expenses)
+    return 'success'
+
+
+# Update
+@app.route('/manufacturer_expenses/update')
+def manufacturer_expenses_update():
+    id = request.args.get('id')
+    manufacturer_id = request.args.get('manufacturer_id')
+    expenses = request.args.get('expenses')
+    date_of_expenses = request.args.get('date_of_expenses')
+    manufacturer_expenses.update(mysql, id, manufacturer_id, expenses, date_of_expenses)
+    return 'success'
+
 
 # -------------------------------------- product --------------------------------------
 
 # Select
-# @app.route('/product/select')
+@app.route('/product/select')
 def product_select():
     query = "select * from product"
     with mysql.connection.cursor() as cursor:
@@ -231,7 +296,7 @@ def product_insert():
 # -------------------------------------- product_in_branch --------------------------------------
 
 # Select
-# @app.route('/product_in_branch/select')
+@app.route('/product_in_branch/select')
 def product_in_branch_select():
     query = "select * from product_in_branch"
     with mysql.connection.cursor() as cursor:
@@ -273,7 +338,7 @@ def product_in_branch_insert():
 # -------------------------------------- publicity--------------------------------------
 
 # Select
-# @app.route('/publicity/select')
+@app.route('/publicity/select')
 def publicity_select():
     query = "select * from publicity"
     with mysql.connection.cursor() as cursor:
@@ -315,7 +380,7 @@ def publicity_insert():
 # -------------------------------------- shareholder--------------------------------------
 
 # Select
-# @app.route('/shareholder/select')
+@app.route('/shareholder/select')
 def shareholder_select():
     query = "select * from shareholder"
     with mysql.connection.cursor() as cursor:
