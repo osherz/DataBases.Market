@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL
 
 def execute_action(mysql,query):
     try:
-        con = mysql.connect()
+        con = mysql.connection
         cursor = con.cursor()
         cursor.execute(query)
         con.commit()
@@ -34,5 +34,5 @@ def get_table(mysql: MySQL, table_name):
 
 
 def delete_from_table(mysql: MySQL, table_name, id):
-    query = f"delete from {table_name} where id={id}"
+    query = f"DELETE FROM {table_name} WHERE id={id}"
     execute_action(mysql,query)
