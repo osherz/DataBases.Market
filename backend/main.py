@@ -24,6 +24,8 @@ def get_table():
     return jsonify(utils.get_table(table_name))
 
 
+################################# Branchs
+################################# country
 ################################# Employee
 # Select @app.route('/employees/delete')
 @app.route('/employees/delete')
@@ -31,8 +33,13 @@ def delete_row():
     id = request.args.get('id')
     utils.delete_from_table()
 
+
 # Update @app.route('/employees/delete')
 # Insert @app.route('/employees/delete')
+def employees_insert():
+    name = request.args.get('name')
+    country.insert(name, mysql)
+    return 'success'
 
 
 ################################# Country
@@ -46,3 +53,10 @@ def employees_insert():
 ################################# Country
 
 app.run('localhost', 5000)
+
+################################# manufac
+
+
+################################# manufac_ex
+
+################################# product
