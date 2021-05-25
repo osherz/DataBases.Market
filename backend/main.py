@@ -177,7 +177,7 @@ def country_update():
 # -------------------------------------- product --------------------------------------
 
 # Select
-# @app.route('/product/select')
+@app.route('/product/select')
 def product_select():
     query = "select * from product"
     with mysql.connection.cursor() as cursor:
@@ -231,7 +231,7 @@ def product_insert():
 # -------------------------------------- product_in_branch --------------------------------------
 
 # Select
-# @app.route('/product_in_branch/select')
+@app.route('/product_in_branch/select')
 def product_in_branch_select():
     query = "select * from product_in_branch"
     with mysql.connection.cursor() as cursor:
@@ -273,7 +273,7 @@ def product_in_branch_insert():
 # -------------------------------------- publicity--------------------------------------
 
 # Select
-# @app.route('/publicity/select')
+@app.route('/publicity/select')
 def publicity_select():
     query = "select * from publicity"
     with mysql.connection.cursor() as cursor:
@@ -315,7 +315,7 @@ def publicity_insert():
 # -------------------------------------- shareholder--------------------------------------
 
 # Select
-# @app.route('/shareholder/select')
+@app.route('/shareholder/select')
 def shareholder_select():
     query = "select * from shareholder"
     with mysql.connection.cursor() as cursor:
