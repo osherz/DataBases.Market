@@ -2,9 +2,15 @@ from flask_mysqldb import MySQL
 import utils
 
 
-def insert(mysql: MySQL, name):
-    query = f"insert into country values({name})"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = utils.cursor_result_to_json(cursor.fetchall())
-    return result
+def insert(mysql: MySQL, id, name):
+    query = f"insert into country values({id},{name})"
+    utils.execute_action(mysql, query)
+
+
+def update(mysql: MySQL, id, name):
+    query = f"update branchs " \
+            f"set" \
+            f"id={id}," \
+            f"name={name}, " \
+            f"where id={id}"
+    utils.execute_action(mysql, query)
