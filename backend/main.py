@@ -1,11 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
-
-import country
-import employees
-import utils
-from backend import branchs
 from utils import cursor_result_to_json
+from backend import branchs, shareholder, country, employees, utils, product, product_in_branch, publicity
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'freedb.tech'
@@ -159,12 +155,14 @@ def country_insert():
     country.update(mysql, id, name)
     return 'success'
 
+
 # delete
 @app.route('/product/delete')
 def delete_row():
     barcode = request.args.get('id')
     utils.delete_from_table(mysql, "employees", barcode)
     return "success"
+
 
 # -------------------------------------- manufac --------------------------------------
 # Select @app.route('/employees/delete')
@@ -192,13 +190,16 @@ def product_select():
     with mysql.connection.cursor() as cursor:
         cursor.execute(query)
         result = cursor_result_to_json(cursor)
-    return jsonify({'data' : result})
+    return jsonify({'data': result})
+
+
 # delete
 @app.route('/product/delete')
 def delete_row():
     barcode = request.args.get('barcode')
     utils.delete_from_table(mysql, "product", barcode)
     return "success"
+
 
 # Update
 @app.route('/product/update')
@@ -212,8 +213,8 @@ def product_update():
     bIsWeighted = request.args.get('bIsWeighted')
     QtyInPackage = request.args.get('QtyInPackage')
     ItemPrice = request.args.get('ItemPrice')
-    employees.update(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
-                     ItemPrice)
+    product.update(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+                   ItemPrice)
     return "success"
 
 
@@ -229,9 +230,10 @@ def product_insert():
     bIsWeighted = request.args.get('bIsWeighted')
     QtyInPackage = request.args.get('QtyInPackage')
     ItemPrice = request.args.get('ItemPrice')
-    employees.insert(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
-                     ItemPrice)
+    product.insert(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+                   ItemPrice)
     return "success"
+
 
 # -------------------------------------- product_in_branch --------------------------------------
 
@@ -242,7 +244,7 @@ def product_in_branch_select():
     with mysql.connection.cursor() as cursor:
         cursor.execute(query)
         result = cursor_result_to_json(cursor)
-    return jsonify({'data' : result})
+    return jsonify({'data': result})
 
 
 # delete
@@ -252,6 +254,7 @@ def delete_row():
     utils.delete_from_table(mysql, "product_in_branch", id)
     return "success"
 
+
 # Update
 @app.route('/product_in_branch/update')
 def product_in_branch_update():
@@ -259,7 +262,7 @@ def product_in_branch_update():
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    employees.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
+    product_in_branch.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
     return "success"
 
 
@@ -270,8 +273,9 @@ def product_insert():
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    employees.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
+    product_in_branch.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
     return "success"
+
 
 # -------------------------------------- publicity--------------------------------------
 
@@ -292,6 +296,7 @@ def delete_row():
     utils.delete_from_table(mysql, "publicity", id)
     return "success"
 
+
 # Update
 @app.route('/publicity/update')
 def publicity_update():
@@ -299,7 +304,7 @@ def publicity_update():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    employees.update(MySQL, id, price, location, goal)
+    publicity.update(MySQL, id, price, location, goal)
     return "success"
 
 
@@ -310,7 +315,49 @@ def publicity_insert():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    employees.update(MySQL, id, price, location, goal)
+    publicity.update(MySQL, id, price, location, goal)
+    return "success"
+
+
+# -------------------------------------- shareholder--------------------------------------
+
+# Select
+# @app.route('/shareholder/select')
+def shareholder_select():
+    query = "select * from shareholder"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
+
+
+# delete
+@app.route('/shareholder/delete')
+def delete_row():
+    ID = request.args.get('ID')
+    utils.delete_from_table(mysql, "shareholder", ID)
+    return "success"
+
+
+# Update
+@app.route('/shareholder/update')
+def shareholder_update():
+    ID = request.args.get('ID')
+    STOCK = request.args.get('STOCK')
+    EMAIL = request.args.get('EMAIL')
+    NAME = request.args.get('NAME')
+    shareholder.update(MySQL, ID, STOCK, EMAIL, NAME)
+    return "success"
+
+
+# Insert
+@app.route('/shareholder/insert')
+def shareholder_insert():
+    ID = request.args.get('ID')
+    STOCK = request.args.get('STOCK')
+    EMAIL = request.args.get('EMAIL')
+    NAME = request.args.get('NAME')
+    shareholder.update(MySQL, ID, STOCK, EMAIL, NAME)
     return "success"
 
 
