@@ -273,5 +273,45 @@ def product_insert():
     employees.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
     return "success"
 
+# -------------------------------------- publicity--------------------------------------
+
+# Select
+# @app.route('/publicity/select')
+def publicity_select():
+    query = "select * from publicity"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
+
+
+# delete
+@app.route('/publicity/delete')
+def delete_row():
+    id = request.args.get('id')
+    utils.delete_from_table(mysql, "publicity", id)
+    return "success"
+
+# Update
+@app.route('/publicity/update')
+def publicity_update():
+    id = request.args.get('id')
+    price = request.args.get('price')
+    location = request.args.get('location')
+    goal = request.args.get('goal')
+    employees.update(MySQL, id, price, location, goal)
+    return "success"
+
+
+# Insert
+@app.route('/publicity/insert')
+def publicity_insert():
+    id = request.args.get('id')
+    price = request.args.get('price')
+    location = request.args.get('location')
+    goal = request.args.get('goal')
+    employees.update(MySQL, id, price, location, goal)
+    return "success"
+
 
 app.run('localhost', 5000)
