@@ -29,7 +29,7 @@ def get_table():
     return jsonify(utils.get_table(table_name))
 
 
-################################# Branchs
+# -------------------------------------- Branches --------------------------------------
 # Select @app.route('/employees/delete')
 # @app.route('/employees/delete')
 
@@ -37,7 +37,7 @@ def get_table():
 # Update @app.route('/employees/delete')
 # Insert @app.route('/employees/delete')
 
-################################# Employee
+# -------------------------------------- Employee --------------------------------------
 # Select
 @app.route('/employees/select')
 def employees_select():
@@ -53,9 +53,8 @@ def employees_select():
 def delete_row():
     id = request.args.get('id')
     table_name = request.args.get('table_name')
-    utils.delete_from_table(mysql, table_name, id)
+    utils.delete_from_table(mysql,table_name,id)
     return "success"
-
 
 # Update
 @app.route('/employees/update')
@@ -80,11 +79,10 @@ def employees_insert():
     seniority = request.args.get('seniority')
     branch_id = request.args.get('branch_id')
     job = request.args.get('job')
-    employees.insert(mysql, name, email, salary, seniority, branch_id, job)
+    employees.insert(mysql,name,email,salary,seniority,branch_id,job)
     return "success"
 
-
-################################# Country
+# -------------------------------------- Country --------------------------------------
 @app.route('/country/insert')
 def country_insert():
     name = request.args.get('name')
@@ -100,7 +98,7 @@ def country_insert():
 # Insert @app.route('/employees/delete')
 
 
-################################# manufac
+# -------------------------------------- manufac --------------------------------------
 # Select @app.route('/employees/delete')
 # @app.route('/employees/delete')
 
@@ -109,7 +107,7 @@ def country_insert():
 # Insert @app.route('/employees/delete')
 
 
-################################# manufac_ex
+# -------------------------------------- manufac_ex --------------------------------------
 # Select @app.route('/employees/delete')
 # @app.route('/employees/delete')
 
@@ -117,7 +115,7 @@ def country_insert():
 # Update @app.route('/employees/delete')
 # Insert @app.route('/employees/delete')
 
-################################# product
+# -------------------------------------- product --------------------------------------
 # Select @app.route('/employees/delete')
 # @app.route('/employees/delete')
 
