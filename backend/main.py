@@ -52,8 +52,8 @@ def employees_select():
 @app.route('/employees/delete')
 def delete_row():
     id = request.args.get('id')
-    utils.delete_from_table(mysql, 'employees', id)
-    return 'success'
+    table_name = request.args.get('table_name')
+    utils.delete_from_table(mysql,table_name,id)
 
 
 # Update
@@ -67,7 +67,7 @@ def employees_update():
     branch_id = request.args.get('branch_id')
     job = request.args.get('job')
     employees.update(mysql, id, name, email, salary, seniority, branch_id, job)
-    return 'success'
+
 
 
 # Insert
@@ -79,8 +79,7 @@ def employees_insert():
     seniority = request.args.get('seniority')
     branch_id = request.args.get('branch_id')
     job = request.args.get('job')
-    employees.insert(mysql, name, email, salary, seniority, branch_id, job)
-    return 'success'
+    employees.insert(mysql,name,email,salary,seniority,branch_id,job)
 
 
 ################################# Country
