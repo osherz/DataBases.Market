@@ -159,6 +159,12 @@ def country_insert():
     country.update(mysql, id, name)
     return 'success'
 
+# delete
+@app.route('/product/delete')
+def delete_row():
+    barcode = request.args.get('id')
+    utils.delete_from_table(mysql, "employees", barcode)
+    return "success"
 
 # -------------------------------------- manufac --------------------------------------
 # Select @app.route('/employees/delete')
@@ -178,12 +184,94 @@ def country_insert():
 # Insert @app.route('/employees/delete')
 
 # -------------------------------------- product --------------------------------------
-# Select @app.route('/employees/delete')
-# @app.route('/employees/delete')
+
+# Select
+# @app.route('/product/select')
+def product_select():
+    query = "select * from product"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data' : result})
+# delete
+@app.route('/product/delete')
+def delete_row():
+    barcode = request.args.get('barcode')
+    utils.delete_from_table(mysql, "product", barcode)
+    return "success"
+
+# Update
+@app.route('/product/update')
+def product_update():
+    barcode = request.args.get('barcode')
+    name = request.args.get('name')
+    manufacturld = request.args.get('manufacturld')
+    description = request.args.get('description')
+    unitQty = request.args.get('unitQty')
+    Quantity = request.args.get('Quantity')
+    bIsWeighted = request.args.get('bIsWeighted')
+    QtyInPackage = request.args.get('QtyInPackage')
+    ItemPrice = request.args.get('ItemPrice')
+    employees.update(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+                     ItemPrice)
+    return "success"
 
 
-# Update @app.route('/employees/delete')
-# Insert @app.route('/employees/delete')
+# Insert
+@app.route('/product/insert')
+def product_insert():
+    barcode = request.args.get('barcode')
+    name = request.args.get('name')
+    manufacturld = request.args.get('manufacturld')
+    description = request.args.get('description')
+    unitQty = request.args.get('unitQty')
+    Quantity = request.args.get('Quantity')
+    bIsWeighted = request.args.get('bIsWeighted')
+    QtyInPackage = request.args.get('QtyInPackage')
+    ItemPrice = request.args.get('ItemPrice')
+    employees.insert(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+                     ItemPrice)
+    return "success"
+
+# -------------------------------------- product_in_branch --------------------------------------
+
+# Select
+# @app.route('/product_in_branch/select')
+def product_in_branch_select():
+    query = "select * from product_in_branch"
+    with mysql.connection.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor_result_to_json(cursor)
+    return jsonify({'data' : result})
+
+
+# delete
+@app.route('/product_in_branch/delete')
+def delete_row():
+    id = request.args.get('id')
+    utils.delete_from_table(mysql, "product_in_branch", id)
+    return "success"
+
+# Update
+@app.route('/product_in_branch/update')
+def product_in_branch_update():
+    id = request.args.get('id')
+    branch_id = request.args.get('branch_id')
+    product_barcode = request.args.get('product_barcode')
+    amount_in_stock = request.args.get('amount_in_stock')
+    employees.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
+    return "success"
+
+
+# Insert
+@app.route('/product_in_branch/insert')
+def product_insert():
+    id = request.args.get('id')
+    branch_id = request.args.get('branch_id')
+    product_barcode = request.args.get('product_barcode')
+    amount_in_stock = request.args.get('amount_in_stock')
+    employees.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
+    return "success"
 
 
 app.run('localhost', 5000)
