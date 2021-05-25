@@ -28,7 +28,7 @@ def get_table():
 
 # -------------------------------------- branchs --------------------------------------
 # Select
-@app.route('branchs/select')
+@app.route('/branchs/select')
 def branchs_select():
     query = "select * from branchs "
     with mysql.connection.cursor() as cursor:
@@ -84,7 +84,7 @@ def employees_select():
 
 # delete
 @app.route('/employees/delete')
-def delete_row():
+def employees_delete_row():
     id = request.args.get('id')
     utils.delete_from_table(mysql, "employees", id)
     return "success"
@@ -132,7 +132,7 @@ def country_select():
 
 # delete
 @app.route('/country/delete')
-def delete_row():
+def country_delete_row():
     id = request.args.get('id')
     utils.delete_from_table(mysql, "country", id)
     return "success"
@@ -149,19 +149,12 @@ def country_insert():
 
 # Update
 @app.route('/country/update')
-def country_insert():
+def country_update():
     id = request.args.get('id')
     name = request.args.get('country_name')
     country.update(mysql, id, name)
     return 'success'
 
-
-# delete
-@app.route('/product/delete')
-def delete_row():
-    barcode = request.args.get('id')
-    utils.delete_from_table(mysql, "employees", barcode)
-    return "success"
 
 
 # -------------------------------------- manufac --------------------------------------
@@ -195,7 +188,7 @@ def product_select():
 
 # delete
 @app.route('/product/delete')
-def delete_row():
+def product_delete_row():
     barcode = request.args.get('barcode')
     utils.delete_from_table(mysql, "product", barcode)
     return "success"
@@ -213,7 +206,7 @@ def product_update():
     bIsWeighted = request.args.get('bIsWeighted')
     QtyInPackage = request.args.get('QtyInPackage')
     ItemPrice = request.args.get('ItemPrice')
-    product.update(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+    product.update(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
                    ItemPrice)
     return "success"
 
@@ -230,7 +223,7 @@ def product_insert():
     bIsWeighted = request.args.get('bIsWeighted')
     QtyInPackage = request.args.get('QtyInPackage')
     ItemPrice = request.args.get('ItemPrice')
-    product.insert(MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+    product.insert(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
                    ItemPrice)
     return "success"
 
@@ -249,7 +242,7 @@ def product_in_branch_select():
 
 # delete
 @app.route('/product_in_branch/delete')
-def delete_row():
+def product_in_branch_delete_row():
     id = request.args.get('id')
     utils.delete_from_table(mysql, "product_in_branch", id)
     return "success"
@@ -262,18 +255,18 @@ def product_in_branch_update():
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    product_in_branch.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
+    product_in_branch.update(mysql, id, branch_id, product_barcode, amount_in_stock)
     return "success"
 
 
 # Insert
 @app.route('/product_in_branch/insert')
-def product_insert():
+def product_in_branch_insert():
     id = request.args.get('id')
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    product_in_branch.update(MySQL, id, branch_id, product_barcode, amount_in_stock)
+    product_in_branch.update(mysql, id, branch_id, product_barcode, amount_in_stock)
     return "success"
 
 
@@ -291,7 +284,7 @@ def publicity_select():
 
 # delete
 @app.route('/publicity/delete')
-def delete_row():
+def publicity_delete_row():
     id = request.args.get('id')
     utils.delete_from_table(mysql, "publicity", id)
     return "success"
@@ -304,7 +297,7 @@ def publicity_update():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    publicity.update(MySQL, id, price, location, goal)
+    publicity.update(mysql, id, price, location, goal)
     return "success"
 
 
@@ -315,7 +308,7 @@ def publicity_insert():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    publicity.update(MySQL, id, price, location, goal)
+    publicity.update(mysql, id, price, location, goal)
     return "success"
 
 
@@ -333,7 +326,7 @@ def shareholder_select():
 
 # delete
 @app.route('/shareholder/delete')
-def delete_row():
+def shareholder_delete_row():
     ID = request.args.get('ID')
     utils.delete_from_table(mysql, "shareholder", ID)
     return "success"
@@ -346,7 +339,7 @@ def shareholder_update():
     STOCK = request.args.get('STOCK')
     EMAIL = request.args.get('EMAIL')
     NAME = request.args.get('NAME')
-    shareholder.update(MySQL, ID, STOCK, EMAIL, NAME)
+    shareholder.update(mysql, ID, STOCK, EMAIL, NAME)
     return "success"
 
 
@@ -357,7 +350,7 @@ def shareholder_insert():
     STOCK = request.args.get('STOCK')
     EMAIL = request.args.get('EMAIL')
     NAME = request.args.get('NAME')
-    shareholder.update(MySQL, ID, STOCK, EMAIL, NAME)
+    shareholder.update(mysql, ID, STOCK, EMAIL, NAME)
     return "success"
 
 

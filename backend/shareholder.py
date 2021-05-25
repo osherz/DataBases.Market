@@ -7,10 +7,11 @@ def insert(mysql: MySQL, ID, STOCK, EMAIL, NAME):
     utils.execute_action(mysql, query)
 
 
-def update(mysql: MySQL, STOCK, EMAIL, NAME):
+def update(mysql: MySQL,ID, STOCK, EMAIL, NAME):
     query = f"update product_in_branch " \
             f"set" \
-            f"STOCK{STOCK}" \
-            f"EMAIL{EMAIL}" \
-            f"NAME{NAME}"
+            f"id={ID}"\
+            f"STOCK={STOCK}" \
+            f"EMAIL={EMAIL}" \
+            f"NAME={NAME}"
     utils.execute_action(mysql, query)
