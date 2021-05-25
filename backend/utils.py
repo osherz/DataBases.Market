@@ -15,7 +15,7 @@ def get_table(mysql: MySQL, table_name):
     query = "select * from %s"
     with mysql.connection.cursor() as cursor:
         cursor.execute(query % (table_name,))
-        result = cursor_result_to_json(cursor.fetchall())
+        result = cursor_result_to_json(cursor)
     return result
 
 

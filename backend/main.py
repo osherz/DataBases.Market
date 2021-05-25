@@ -15,11 +15,7 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index():
-    query = "select * from employees"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor.fetchall())
-    return jsonify({'data': result})
+    return jsonify({'data': utils.get_table(mysql, 'employees')})
 
 
 @app.route('/tables')
