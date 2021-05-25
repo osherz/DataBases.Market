@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 
 def execute_action(mysql,query):
     try:
+        #
         con = mysql.connection
         cursor = con.cursor()
         cursor.execute(query)
