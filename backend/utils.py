@@ -4,7 +4,7 @@ from flask_mysqldb import MySQL
 def execute_action(mysql, query):
     try:
         #
-        con = mysql.connection
+        con = mysql.connect
         cursor = con.cursor()
         cursor.execute(query)
         con.commit()

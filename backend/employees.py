@@ -9,13 +9,12 @@ def insert(mysql: MySQL, id, name, email, salary, seniority, branch_id, job):
 
 def update(mysql: MySQL, id, name, email, salary, seniority, branch_id, job):
     query = f"update employees " \
-            f"set" \
-            f"id={id}," \
-            f"name={name}, " \
-            f"email={email}, " \
+            f"set " \
+            f"name='{name}', " \
+            f"email='{email}', " \
             f"salary={salary}, " \
             f"seniority={seniority}, " \
             f"branch_id={branch_id}, " \
-            f"job={job}" \
+            f"job='{job}' " \
             f"where id={id}"
     utils.execute_action(mysql, query)
