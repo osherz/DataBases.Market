@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 
-const columns = [
-    { field: 'ID', headerName: 'ID', width: 70 },
-    { field: 'NAME', headerName: 'Name', width: 130 },
-    { field: 'EMAIL', headerName: 'Email', width: 130 },
-    { field: 'SALARY', headerName: 'Salary', width: 130, type: 'number' },
-    { field: 'SENIORITY', headerName: 'Seniority', width: 130, type: 'number' },
-    { field: 'BRACH_ID', headerName: 'Brach Id', width: 130 },
-    { field: 'JOB', headerName: 'Job', width: 130 }
-];
-
-
-export default function DataTable() {
+export default function DataTable({ tableName }) {
     const [rows, setRows] = useState([]);
 
+    let columns = [];
+    if (rows.length > 0) {
+        columns = Object.keys(rows[0]).map(colName => {
+            return { field: colName, headerName: textToTitle(colName), width: 150 };
+        });
+    }
+
     useEffect(() => {
-        fetch('/tables?table=employees')
+        fetch(`/${tableName}/select`)
             .then(result => result.json())
             .then(data => setRows(data['data']));
-    }, []);
+    }, [tableName]);
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: '800px', width: '100%' }}>
             <DataGrid
                 rows={rows}
-                getRowId={row=>row['ID']}
+                getRowId={row => row['ID'] ? row['ID'] :
+                    row['id'] ? row['id'] : row['barcode']}
                 columns={columns}
-                pageSize={5}
+                autoPageSize
                 checkboxSelection
             />
         </div>
     );
+}
+
+function textToTitle(str) {
+    return str.charAt(0)
+        .toUpperCase()
+        .concat(str.toLowerCase().slice(1, str.length))
 }
