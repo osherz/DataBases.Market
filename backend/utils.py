@@ -36,7 +36,10 @@ def get_table(mysql: MySQL, table_name):
 
 def select_from_table(mysql: MySQL, table_name):
     query = f"select * FROM {table_name}"
-    execute_action(mysql, query)
+    with mysql.connection.cursor() as cursor:
+        cursor.execute_action(mysql, query)
+        result = cursor_result_to_json(cursor)
+    return result
 
 
 def delete_from_table(mysql: MySQL, table_name, id):

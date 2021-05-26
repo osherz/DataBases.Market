@@ -124,10 +124,7 @@ def employees_insert():
 # Select
 @app.route('/country/select')
 def country_select():
-    query = "select * from country"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
+    utils.select_from_table(mysql,country)
     return jsonify({'data': result})
 
 
@@ -344,6 +341,7 @@ def publicity_select():
     with mysql.connection.cursor() as cursor:
         cursor.execute(query)
         result = cursor_result_to_json(cursor)
+
     return jsonify({'data': result})
 
 
@@ -386,6 +384,7 @@ def shareholder_select():
     with mysql.connection.cursor() as cursor:
         cursor.execute(query)
         result = cursor_result_to_json(cursor)
+        utils.select_from_table(mysql,"shareholder")
     return jsonify({'data': result})
 
 
