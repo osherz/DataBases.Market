@@ -9,7 +9,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import {ListItemIcon, ListItemText, ListSubheader} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import DataTable from './data-table';
+import TableManagement from './table-management';
 import './App.css';
 
 const drawerWidth = 240;
@@ -163,7 +163,7 @@ function App() {
         })}
       >
         <div className={classes.drawerHeader} />
-        <DataTable tableName={tableNameToManage} />
+        <TableManagement tableName={tableNameToManage} />
       </main>
     </div>
   );
