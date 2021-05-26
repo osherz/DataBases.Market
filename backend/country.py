@@ -8,9 +8,8 @@ def insert(mysql: MySQL, id, name):
 
 
 def update(mysql: MySQL, id, name):
-    query = f"update branchs " \
-            f"set" \
-            f"id={id}," \
-            f"name={name}, " \
+    query = f"update country " \
+            f"set " \
+            f"country_name='{name}' " \
             f"where id={id}"
     utils.execute_action(mysql, query)
