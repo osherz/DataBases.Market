@@ -1,0 +1,2 @@
+SELECT ID,SALARY
+FROM employees
