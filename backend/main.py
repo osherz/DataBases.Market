@@ -153,7 +153,7 @@ def country_update():
 # Select
 @app.route('/manufacturer/select')
 def manufacturer_select():
-    result = utils.get_table(mysql, 'manufacturer')
+    result = utils.get_table(mysql, 'Manufacturer')
     return jsonify({'data': result})
 
 
@@ -161,7 +161,7 @@ def manufacturer_select():
 @app.route('/manufacturer/delete')
 def manufacturer_delete_row():
     id = request.args.get('id')
-    utils.delete_from_table(mysql, "manufacturer", id)
+    utils.delete_from_table(mysql, "Manufacturer", id)
     return "success"
 
 

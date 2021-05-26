@@ -34,6 +34,10 @@ def get_table(mysql: MySQL, table_name):
     return result
 
 
+def execute_select(query, params={}):
+    cursor.execute(query, params=params)
+
+
 def delete_from_table(mysql: MySQL, table_name, id):
     query = f"DELETE FROM {table_name} WHERE id={id}"
     execute_action(mysql, query)
