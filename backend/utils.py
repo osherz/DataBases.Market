@@ -1,4 +1,5 @@
 from flask_mysqldb import MySQL
+from flask import Flask, jsonify, request
 
 
 def execute_action(mysql, query):
@@ -34,8 +35,12 @@ def get_table(mysql: MySQL, table_name):
     return result
 
 
-def execute_select(query, params={}):
-    cursor.execute(query, params=params)
+def execute_select(mysql: MySQL,path, params={}):
+    with open(path) as query:
+        with mysql.connection.cursor() as cursor:
+            cursor.execute(query.read())
+            result = cursor_result_to_json(cursor)
+    return result
 
 
 def delete_from_table(mysql: MySQL, table_name, id):
