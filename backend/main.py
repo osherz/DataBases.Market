@@ -391,5 +391,18 @@ def shareholder_insert():
     shareholder.update(mysql, ID, STOCK, EMAIL, NAME)
     return "success"
 
+# ************************************************************************************************
+# --------------------------------------------------querys----------------------------------------
+# ************************************************************************************************
+import pkgutil
+@app.route('/query/all_employees')
+def all_employees():
+    with open('level3/all_employees.sql') as query:
+        with mysql.connection.cursor() as cursor:
+            cursor.execute(query.read())
+            result = cursor_result_to_json(cursor)
+        return jsonify({'data': result})
+
+
 
 app.run('localhost', 5000)
