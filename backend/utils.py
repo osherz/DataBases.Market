@@ -34,14 +34,6 @@ def get_table(mysql: MySQL, table_name):
     return result
 
 
-def select_from_table(mysql: MySQL, table_name):
-    query = f"select * FROM {table_name}"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute_action(mysql, query)
-        result = cursor_result_to_json(cursor)
-    return result
-
-
 def delete_from_table(mysql: MySQL, table_name, id):
     query = f"DELETE FROM {table_name} WHERE id={id}"
     execute_action(mysql, query)

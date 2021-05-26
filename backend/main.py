@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 from utils import cursor_result_to_json
-from backend import branchs, shareholder, country, employees, utils, product, product_in_branch, publicity, \
+import branchs, shareholder, country, employees, utils, product, product_in_branch, publicity, \
     manufacturer, manufacturer_expenses
 
 app = Flask(__name__)
@@ -31,10 +31,7 @@ def get_table():
 # Select
 @app.route('/branchs/select')
 def branchs_select():
-    query = "select * from branchs "
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
+    result = utils.get_table(mysql, 'branchs')
     return jsonify({'data': result})
 
 
@@ -76,10 +73,7 @@ def branchs_insert():
 # Select
 @app.route('/employees/select')
 def employees_select():
-    query = "select * from employees"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
+    result = utils.get_table(mysql, 'employees')
     return jsonify({'data': result})
 
 
@@ -124,7 +118,7 @@ def employees_insert():
 # Select
 @app.route('/country/select')
 def country_select():
-    utils.select_from_table(mysql,country)
+    result = utils.get_table(mysql, 'country')
     return jsonify({'data': result})
 
 
@@ -159,10 +153,7 @@ def country_update():
 # Select
 @app.route('/manufacturer/select')
 def manufacturer_select():
-    query = "select * from manufacturer"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
+    result = utils.get_table(mysql, 'manufacturer')
     return jsonify({'data': result})
 
 
@@ -199,10 +190,7 @@ def manufacturer_update():
 # Select
 @app.route('/manufacturer_expenses/select')
 def manufacturer_expenses_select():
-    query = "select * from manufacturer_expenses"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
+    result = utils.get_table(mysql, 'manufacturer_expenses')
     return jsonify({'data': result})
 
 
@@ -221,7 +209,7 @@ def manufacturer_expenses_insert():
     manufacturer_id = request.args.get('manufacturer_id')
     expenses = request.args.get('expenses')
     date_of_expenses = request.args.get('date_of_expenses')
-    manufacturer_expenses.insert(mysql, id, manufacturer_id, expenses,date_of_expenses)
+    manufacturer_expenses.insert(mysql, id, manufacturer_id, expenses, date_of_expenses)
     return 'success'
 
 
@@ -241,10 +229,7 @@ def manufacturer_expenses_update():
 # Select
 @app.route('/product/select')
 def product_select():
-    query = "select * from product"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
+    result = utils.get_table(mysql, 'product')
     return jsonify({'data': result})
 
 
@@ -295,10 +280,7 @@ def product_insert():
 # Select
 @app.route('/product_in_branch/select')
 def product_in_branch_select():
-    query = "select * from product_in_branch"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
+    result = utils.get_table(mysql, 'product_in_branch')
     return jsonify({'data': result})
 
 
@@ -337,11 +319,7 @@ def product_in_branch_insert():
 # Select
 @app.route('/publicity/select')
 def publicity_select():
-    query = "select * from publicity"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
-
+    result = utils.get_table(mysql, 'publicity')
     return jsonify({'data': result})
 
 
@@ -380,11 +358,7 @@ def publicity_insert():
 # Select
 @app.route('/shareholder/select')
 def shareholder_select():
-    query = "select * from shareholder"
-    with mysql.connection.cursor() as cursor:
-        cursor.execute(query)
-        result = cursor_result_to_json(cursor)
-        utils.select_from_table(mysql,"shareholder")
+    result = utils.get_table(mysql, 'shareholder')
     return jsonify({'data': result})
 
 
