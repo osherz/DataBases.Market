@@ -391,18 +391,176 @@ def shareholder_insert():
     shareholder.update(mysql, ID, STOCK, EMAIL, NAME)
     return "success"
 
+
 # ************************************************************************************************
 # --------------------------------------------------querys----------------------------------------
 # ************************************************************************************************
-import pkgutil
 @app.route('/query/all_employees')
 def all_employees():
-    with open('level3/all_employees.sql') as query:
-        with mysql.connection.cursor() as cursor:
-            cursor.execute(query.read())
-            result = cursor_result_to_json(cursor)
-        return jsonify({'data': result})
+    result = utils.execute_select(mysql, 'querys/all_employees.sql')
+    return jsonify({'data': result})
 
+
+@app.route('/query/avg_country_price')
+def avg_country_price():
+    result = utils.execute_select(mysql, 'querys/avg_country_price.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/avg_manu_price')
+def avg_manu_price():
+    result = utils.execute_select(mysql, 'querys/avg_manu_price.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/best_manufaturer_of_each_branch')
+def best_manufaturer_of_each_branch():
+    result = utils.execute_select(mysql, 'querys/best_manufaturer_of_each_branch.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/big_seniority')
+def big_seniority():
+    result = utils.execute_select(mysql, 'querys/big_seniority.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/biggest_shareholders')
+def biggest_shareholders():
+    result = utils.execute_select(mysql, 'querys/biggest_shareholders.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/count_of_employees_in_each_branch')
+def count_of_employees_in_each_branch():
+    result = utils.execute_select(mysql, 'querys/count_of_employees_in_each_branch.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/expenses')
+def expenses():
+    result = utils.execute_select(mysql, 'querys/expenses.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/list_of_brenchs_in_specific_jerusalem')
+def list_of_brenchs_in_specific_jerusalem():
+    result = utils.execute_select(mysql, 'querys/list_of_brenchs_in_specific_jerusalem.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/maneger_manege_branch_by_bigest_revenue')
+def maneger_manege_branch_by_bigest_revenue():
+    result = utils.execute_select(mysql, 'querys/maneger_manege_branch_by_bigest_revenue.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/manufacturer_expenses')
+def manufacturer_expenses():
+    result = utils.execute_select(mysql, 'querys/manufacturer_expenses.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/max_manu_cuntry')
+def max_manu_cuntry():
+    result = utils.execute_select(mysql, 'querys/max_manu_cuntry.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/max_manu_product')
+def max_manu_product():
+    result = utils.execute_select(mysql, 'querys/max_manu_product.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/min_salary')
+def min_salary():
+    result = utils.execute_select(mysql, 'querys/min_salary.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/num_of_town')
+def num_of_town():
+    result = utils.execute_select(mysql, 'querys/num_of_town.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/number_of_employs')
+def number_of_employs():
+    result = utils.execute_select(mysql, 'querys/number_of_employs.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/number_of_manager')
+def number_of_manager():
+    result = utils.execute_select(mysql, 'querys/number_of_manager.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/nums_emploeeys+sum_of_salary')
+def nums_emploeeys_sum_of_salary():
+    result = utils.execute_select(mysql, 'querys/nums_emploeeys+sum_of_salary.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/our_biggest_manufaturer')
+def our_biggest_manufaturer():
+    result = utils.execute_select(mysql, 'querys/our_biggest_manufaturer.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/over_ten_thousand')
+def over_ten_thousand():
+    result = utils.execute_select(mysql, 'querys/over_ten_thousand.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/product_of_min_manu')
+def product_of_min_manu():
+    result = utils.execute_select(mysql, 'querys/product_of_min_manu.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/publicity_price_of_specific_goal')
+def publicity_price_of_specific_goal():
+    result = utils.execute_select(mysql, 'querys/publicity_price_of_specific_goal.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/salary_of_employee')
+def salary_of_employee():
+    result = utils.execute_select(mysql, 'querys/salary_of_employee.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/The_branch_with_the_most_products')
+def The_branch_with_the_most_products():
+    result = utils.execute_select(mysql, 'querys/The_branch_with_the_most_products.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/sum_of_meters_in_all_sopers')
+def sum_of_meters_in_all_sopers():
+    result = utils.execute_select(mysql, 'querys/sum_of_meters_in_all_sopers.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/the_number_os_branchs')
+def the_number_os_branchs():
+    result = utils.execute_select(mysql, 'querys/the_number_os_branchs.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/total_profit_all_branchs')
+def total_profit_all_branchs():
+    result = utils.execute_select(mysql, 'querys/total_profit_all_branchs.sql')
+    return jsonify({'data': result})
+
+
+@app.route('/query/total_publicity_cost')
+def total_publicity_cost():
+    result = utils.execute_select(mysql, 'querys/total_publicity_cost.sql')
+    return jsonify({'data': result})
 
 
 app.run('localhost', 5000)
