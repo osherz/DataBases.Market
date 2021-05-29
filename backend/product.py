@@ -12,8 +12,8 @@ def insert(mysql: MySQL, barcode, name, manufacturld, description, unitQty, Quan
 def update(mysql: MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
            ItemPrice):
     query = f"update product " \
-            f"set" \
-            f"name={name}," \
+            f"set " \
+            f"name='{name}'," \
             f"manufacturld={manufacturld}," \
             f"description='{description}'," \
             f"unitQty='{unitQty}'," \
