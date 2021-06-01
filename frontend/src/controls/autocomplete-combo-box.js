@@ -3,18 +3,18 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
 
-export default function AutocompleteComboBox({value, handleValueChanged, tableName}) {
+export default function AutocompleteComboBox({value, handleValueChanged, tableName, columnToShow}) {
     const [data, setData] = useState([]);
     useEffect(() => {
         fetch(`/${tableName}/select`)
             .then(result => result.json())
             .then(json => setData(json['data']));
-    }, []);
+    }, [tableName]);
 
     return (
         <Autocomplete
             options={data}
-            getOptionLabel={option => option['country_name']}
+            getOptionLabel={option => option[columnToShow]}
             value={value}
             onChange={(event, newValue) => handleValueChanged(newValue)}
             renderInput={(params) => <TextField {...params} label={'Choose ' + tableName} variant="outlined" />}

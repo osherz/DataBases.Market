@@ -17,13 +17,15 @@ export default function ManufacturerForm(props) {
                         label="Manufaturer Name" 
                         value={name} 
                         onChange={(ev)=>setName(ev.target.value)} 
+                        fullWidth
                         />
                 </div>
 
-                <div>
+                <div className='form-control'>
                     <AutocompleteComboBox
                         tableName='country'
                         value={country}
+                        columnToShow="country_name"
                         handleValueChanged={setCountry}
                     />
                 </div>

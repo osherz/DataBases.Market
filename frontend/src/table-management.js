@@ -8,9 +8,8 @@ import { NoteAdd } from "@material-ui/icons";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import FormDialog from "./forms/form-dialog";
-import ManufacturerForm from './forms/manufacturer-form';
+import FormSelector from './forms/form-selector';
 import * as requests from './requests';
-import CountryCombobox from './controls/autocomplete-combo-box';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -75,15 +74,15 @@ export default function TableManagement({ tableName }) {
         });
     };
 
-    const updateStatus = (status, successCallBack=function(){}) => {
+    const updateStatus = (status, successCallBack = function () { }) => {
         const isSuccess = status === "success";
         setOpenSuccessBar(isSuccess);
         setOpenFailedBar(!isSuccess);
-        if(isSuccess) {
+        if (isSuccess) {
             successCallBack();
             setTimeout(fetchData, 100);
         }
-        
+
     }
 
     const updateRow = (rowToUpdate) => {
@@ -102,12 +101,12 @@ export default function TableManagement({ tableName }) {
         }
     };
 
-    const handleFinishInsert = () => { 
+    const handleFinishInsert = () => {
         requests.insertRowWithParams(
-            tableName, 
-            getParams(), 
+            tableName,
+            getParams(),
             status => updateStatus(status, handleInsertFormClose));
-        
+
     };
 
     const handleInsertButtonClick = () => { setOpenInsertForm(true) };
@@ -181,7 +180,10 @@ export default function TableManagement({ tableName }) {
                 handleClose={handleInsertFormClose}
                 handleFinish={handleFinishInsert}
             >
-                <ManufacturerForm setParams={(getParamsFun) => getParams = getParamsFun} />
+                <FormSelector
+                    setParams={(getParamsFun) => getParams = getParamsFun}
+                    tableName={tableName}
+                />
             </FormDialog>
         </div>
     );
