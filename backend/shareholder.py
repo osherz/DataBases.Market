@@ -2,8 +2,8 @@ from flask_mysqldb import MySQL
 import utils
 
 
-def insert(mysql: MySQL, ID, STOCK, EMAIL, NAME):
-    query = f"insert into shareholder values({ID},{STOCK},{EMAIL},{NAME})"
+def insert(mysql: MySQL, STOCK, EMAIL, NAME):
+    query = f"insert into shareholder values({STOCK},{EMAIL},{NAME})"
     utils.execute_action(mysql, query)
 
 

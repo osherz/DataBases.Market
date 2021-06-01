@@ -102,14 +102,13 @@ def employees_update():
 # Insert
 @app.route('/employees/insert')
 def employees_insert():
-    id = request.args.get('id')
     name = request.args.get('name')
     email = request.args.get('email')
     salary = request.args.get('salary')
     seniority = request.args.get('seniority')
     branch_id = request.args.get('branch_id')
     job = request.args.get('job')
-    employees.insert(mysql, id, name, email, salary, seniority, branch_id, job)
+    employees.insert(mysql, name, email, salary, seniority, branch_id, job)
     return "success"
 
 
@@ -133,9 +132,8 @@ def country_delete_row():
 # insert
 @app.route('/country/insert')
 def country_insert():
-    id = request.args.get('id')
     name = request.args.get('country_name')
-    country.insert(mysql, id, name)
+    country.insert(mysql, name)
     return 'success'
 
 
@@ -168,10 +166,9 @@ def manufacturer_delete_row():
 # insert
 @app.route('/manufacturer/insert')
 def manufacturer_insert():
-    id = request.args.get('id')
     countryid = request.args.get('countryid')
     name = request.args.get('name')
-    manufacturer.insert(mysql, id, name, countryid)
+    manufacturer.insert(mysql, name, countryid)
     return 'success'
 
 
@@ -205,11 +202,10 @@ def manufacturer_expenses_delete_row():
 # insert
 @app.route('/manufacturer_expenses/insert')
 def manufacturer_expenses_insert():
-    id = request.args.get('id')
     manufacturer_id = request.args.get('manufacturer_id')
     expenses = request.args.get('expenses')
     date_of_expenses = request.args.get('date_of_expenses')
-    manufacturer_expenses.insert(mysql, id, manufacturer_id, expenses, date_of_expenses)
+    manufacturer_expenses.insert(mysql, manufacturer_id, expenses, date_of_expenses)
     return 'success'
 
 
@@ -306,11 +302,10 @@ def product_in_branch_update():
 # Insert
 @app.route('/product_in_branch/insert')
 def product_in_branch_insert():
-    id = request.args.get('id')
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    product_in_branch.update(mysql, id, branch_id, product_barcode, amount_in_stock)
+    product_in_branch.update(mysql, branch_id, product_barcode, amount_in_stock)
     return "success"
 
 
@@ -345,11 +340,10 @@ def publicity_update():
 # Insert
 @app.route('/publicity/insert')
 def publicity_insert():
-    id = request.args.get('id')
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    publicity.update(mysql, id, price, location, goal)
+    publicity.update(mysql, price, location, goal)
     return "success"
 
 
@@ -384,11 +378,10 @@ def shareholder_update():
 # Insert
 @app.route('/shareholder/insert')
 def shareholder_insert():
-    ID = request.args.get('ID')
     STOCK = request.args.get('STOCK')
     EMAIL = request.args.get('EMAIL')
     NAME = request.args.get('NAME')
-    shareholder.update(mysql, ID, STOCK, EMAIL, NAME)
+    shareholder.update(mysql, STOCK, EMAIL, NAME)
     return "success"
 
 
