@@ -2,8 +2,8 @@ from flask_mysqldb import MySQL
 import utils
 
 
-def insert(mysql: MySQL, id, branch_id, product_barcode, amount_in_stock):
-    query = f"insert into product_in_branch values({id},{branch_id},{product_barcode},{amount_in_stock})"
+def insert(mysql: MySQL, branch_id, product_barcode, amount_in_stock):
+    query = f"insert into product_in_branch values({branch_id},{product_barcode},{amount_in_stock})"
     utils.execute_action(mysql, query)
 
 

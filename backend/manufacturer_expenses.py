@@ -2,8 +2,8 @@ from flask_mysqldb import MySQL
 import utils
 
 
-def insert(mysql, id, manufacturer_id, expenses, date_of_expenses):
-    query = f"insert into manufacturer_expenses values({id},{manufacturer_id},{expenses},{date_of_expenses})"
+def insert(mysql, manufacturer_id, expenses, date_of_expenses):
+    query = f"insert into manufacturer_expenses values({manufacturer_id},{expenses},{date_of_expenses})"
     utils.execute_action(mysql, query)
 
 

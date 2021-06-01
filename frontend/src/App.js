@@ -7,9 +7,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import {ListItemIcon, ListItemText, ListSubheader} from '@material-ui/core';
+import { ListItemIcon, ListItemText, ListSubheader } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import TableManagement from './table-management';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 import './App.css';
 
 const drawerWidth = 240;
@@ -97,75 +99,76 @@ function App() {
   const customQueries = ['a', 'b'];
 
   return (
-    <div>
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: openMenu,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleMenu}
-            edge="start"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            {barHeader}
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    
+      <div>
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: openMenu,
+          })}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleMenu}
+              edge="start"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              {barHeader}
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={openMenu}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div>
-          <IconButton onClick={closeMenu}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-        <ListSubheader component="div" id="tables-to-manage-subheader">
-          Tables To Manage
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={openMenu}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div>
+            <IconButton onClick={closeMenu}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListSubheader component="div" id="tables-to-manage-subheader">
+              Tables To Manage
         </ListSubheader>
-          {tablesNames.map((text, index) => (
-            <ListItem button key={text} onClick={() => changeTableToManage(text)}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <ListSubheader component="div" id="custom-queries-subheader">
-          Custom Queries
+            {tablesNames.map((text, index) => (
+              <ListItem button key={text} onClick={() => changeTableToManage(text)}>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <ListSubheader component="div" id="custom-queries-subheader">
+            Custom Queries
         </ListSubheader>
-        <List >
-          {customQueries.map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+          <List >
+            {customQueries.map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
 
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: openMenu,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        <TableManagement tableName={tableNameToManage} />
-      </main>
-    </div>
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: openMenu,
+          })}
+        >
+          <div className={classes.drawerHeader} />
+          <TableManagement tableName={tableNameToManage} />
+        </main>
+      </div>
   );
 }
 
