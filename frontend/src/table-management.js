@@ -9,6 +9,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import FormDialog from "./forms/form-dialog";
 import ManufacturerForm from './forms/manufacturer-form';
+import * as requests from './requests';
 import CountryCombobox from './controls/autocomplete-combo-box';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TableManagement({ tableName }) {
+    let getParams = null;
     const classes = useStyles();
 
     const [rows, setRows] = useState([]);
@@ -73,51 +75,40 @@ export default function TableManagement({ tableName }) {
         });
     };
 
-    const operateAndUpdateStatus = (query) => {
-
-        fetch(query)
-            .then((result) => result.text())
-            .then((text) => {
-                setOpenSuccessBar(text === "success");
-                setOpenFailedBar(text === "failed");
-                setTimeout(fetchData, 100);
-            })
-            .catch((error) => setOpenFailedBar(true));
+    const updateStatus = (status, successCallBack=function(){}) => {
+        const isSuccess = status === "success";
+        setOpenSuccessBar(isSuccess);
+        setOpenFailedBar(!isSuccess);
+        if(isSuccess) {
+            successCallBack();
+            setTimeout(fetchData, 100);
+        }
+        
     }
 
     const updateRow = (rowToUpdate) => {
-        const paramsStr = utils.objectToGetParams(rowToUpdate);
-        const query = `${tableName}/update?${paramsStr}`;
-        operateAndUpdateStatus(query);
+        requests.updateRow(tableName, rowToUpdate, updateStatus);
     };
 
     const handleDelete = async () => {
         if (selectionModel.length > 0) {
-            const rowsDeleted = [];
-            const errorRows = [];
-            selectionModel.forEach(async (rowid) => {
-                try {
-                    const result = await fetch(`${tableName}/delete?${idColName}=${rowid}`);
-                    const text = await result.text();
-                    if (text === 'success') {
-                        rowsDeleted.push(rowid);
-                    } else {
-                        errorRows.push(rowid);
-                    }
-                }
-                catch {
-                    errorRows.push(rowid);
-                }
-            });
-
-            const hasErrors = errorRows.length > 0;
-            setOpenSuccessBar(!hasErrors);
-            setOpenFailedBar(hasErrors);
-            fetchData();
+            requests.deleteRows(tableName, idColName, selectionModel,
+                (errorRows) => {
+                    const hasErrors = errorRows.length > 0;
+                    setOpenSuccessBar(!hasErrors);
+                    setOpenFailedBar(hasErrors);
+                    fetchData();
+                });
         }
     };
 
-    const handleFinishInsert = () => { };
+    const handleFinishInsert = () => { 
+        requests.insertRowWithParams(
+            tableName, 
+            getParams(), 
+            status => updateStatus(status, handleInsertFormClose));
+        
+    };
 
     const handleInsertButtonClick = () => { setOpenInsertForm(true) };
     const handleInsertFormClose = () => { setOpenInsertForm(false) };
@@ -190,7 +181,7 @@ export default function TableManagement({ tableName }) {
                 handleClose={handleInsertFormClose}
                 handleFinish={handleFinishInsert}
             >
-                <ManufacturerForm />
+                <ManufacturerForm setParams={(getParamsFun) => getParams = getParamsFun} />
             </FormDialog>
         </div>
     );
