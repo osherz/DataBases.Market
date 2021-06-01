@@ -601,7 +601,7 @@ def almost_out_of_stock_in_country(country_name,min_amount):
             result = cursor_result_to_json(cursor)
     return jsonify({'data': result})
 
-#####################prublem whit the table munufactorer#########################################
+
 @app.route('/query/products_of_specific_manu/<string:param>')
 def products_of_specific_manu(param):
     with open(r"param/products_of_specific_manu.sql") as query:
@@ -610,7 +610,7 @@ def products_of_specific_manu(param):
             cursor.execute(temp)
             result = cursor_result_to_json(cursor)
     return jsonify({'data': result})
-#####################################################################
+
 
 @app.route('/query/prosucts_of_specific_country/<string:param>') # need whit "" like "IL"
 def prosucts_of_specific_country(param):
