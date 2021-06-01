@@ -6,6 +6,7 @@ import ShareholderForm from './shareholder-form';
 import PublicityForm from './publicity';
 import ProductInBranchForm from './product-in-branch-form';
 import BranchForm from './branch-form';
+import EmployeeForm from './employee-form';
 
 /**
  * 
@@ -21,6 +22,7 @@ export default function FormSelector({ tableName='', setParams }) {
         publicity: <PublicityForm setParams={setParams} />,
         product_in_branch: <ProductInBranchForm setParams={setParams} />,
         branchs: <BranchForm setParams={setParams} />,
+        employees: <EmployeeForm setParams={setParams} />,
     };
 
     return tableName in forms ? forms[tableName] : 'Error';
