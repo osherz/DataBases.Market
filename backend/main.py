@@ -66,7 +66,7 @@ def branchs_insert():
     manager_id = request.args.get('manager_id')
     address = request.args.get('address')
     area = request.args.get('area')
-    branchs.insert(mysql, id, town, revenue, manager_id, address, area)
+    branchs.insert(mysql, town, revenue, manager_id, address, area)
     return "success"
 
 
@@ -306,7 +306,7 @@ def product_in_branch_insert():
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    product_in_branch.update(mysql, branch_id, product_barcode, amount_in_stock)
+    product_in_branch.insert(mysql, branch_id, product_barcode, amount_in_stock)
     return "success"
 
 
@@ -344,7 +344,7 @@ def publicity_insert():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    publicity.update(mysql, price, location, goal)
+    publicity.insert(mysql, price, location, goal)
     return "success"
 
 
@@ -379,10 +379,10 @@ def shareholder_update():
 # Insert
 @app.route('/shareholder/insert')
 def shareholder_insert():
-    STOCK = request.args.get('STOCK')
-    EMAIL = request.args.get('EMAIL')
-    NAME = request.args.get('NAME')
-    shareholder.update(mysql, STOCK, EMAIL, NAME)
+    STOCK = request.args.get('stock')
+    EMAIL = request.args.get('email')
+    NAME = request.args.get('name')
+    shareholder.insert(mysql, STOCK, EMAIL, NAME)
     return "success"
 
 
@@ -447,14 +447,6 @@ def list_of_brenchs_in_specific_jerusalem():
 def maneger_manege_branch_by_bigest_revenue():
     result = utils.execute_select(mysql, 'querys/maneger_manege_branch_by_bigest_revenue.sql')
     return jsonify({'data': result})
-
-
-##########################################
-@app.route('/query/manufacturer_expenses')
-def manufacturer_expenses():
-    result = utils.execute_select(mysql, 'querys/manufacturer_expenses.sql')
-    return jsonify({'data': str(result)})
-###########################################
 
 @app.route('/query/max_manu_cuntry')  #
 def max_manu_cuntry():

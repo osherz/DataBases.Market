@@ -3,7 +3,8 @@ import utils
 
 
 def insert(mysql: MySQL, branch_id, product_barcode, amount_in_stock):
-    query = f"insert into product_in_branch values({branch_id},{product_barcode},{amount_in_stock})"
+    query = f"insert into product_in_branch(branch_id,product_barcode,amount_in_stock) " \
+            f"values({branch_id},{product_barcode},{amount_in_stock})"
     utils.execute_action(mysql, query)
 
 

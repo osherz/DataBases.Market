@@ -18,3 +18,13 @@ export function removeFromList(ls, value) {
         ls.splice(index, 1);
     }
 }
+
+/**
+ * 
+ * @param {*} milisec 
+ * @returns Date string
+ */
+export function dateNumberToString(milisec){
+    const date = new Date(milisec);
+    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+}

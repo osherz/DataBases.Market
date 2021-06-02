@@ -10,7 +10,7 @@ export default function BranchForm(props) {
     const [area, setArea] = useState();
     const [revenue, setRevenue] = useState();
 
-    props.setParams(() => `manager_id=${manager.id}&town=${town}&address=${address}&area=${area}&revenue=${revenue}`);
+    props.setParams(() => `manager_id=${manager['ID']}&town=${town}&address=${address}&area=${area}&revenue=${revenue}`);
     return (
         <div>
             <form {...props}>
