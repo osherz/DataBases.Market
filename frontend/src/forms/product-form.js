@@ -15,9 +15,9 @@ export default function ProductForm(props) {
     const [quantity, setQuantity] = useState();
     const [bIsWeighted, setBIsWeighted] = useState(false);
     const [unitQty, setUnitQty] = useState('');
-    const [manufcaturer, setManufaturer] = useState('');
+    const [manufacturer, setManufacturer] = useState('');
 
-    props.setParams(() => `barcode=${barcode}&name=${name}&description=${description}&manufcaturerId=${manufcaturer.id}&unitQty=${unitQty}&quantity=${quantity}&bIsWeighted=${bIsWeighted}&qtyInPackage=${qtyInPackage}&itemPrice=${itemPrice}`);
+    props.setParams(() => `barcode=${barcode}&name=${name}&description=${description}&manufacturld=${manufacturer.id}&unitQty=${unitQty}&quantity=${quantity}&bIsWeighted=${bIsWeighted}&qtyInPackage=${qtyInPackage}&itemPrice=${itemPrice}`);
 
     const unitQtyOptions = [
         'גרמים',
@@ -62,10 +62,10 @@ export default function ProductForm(props) {
 
                 <div className='form-control'>
                     <AutocompleteComboBox
-                        tableName='manufcturer'
-                        value={manufcaturer}
-                        columnToShow="name"
-                        handleValueChanged={setManufaturer}
+                        tableName='manufacturer'
+                        value={manufacturer}
+                        columnToShow='name'
+                        handleValueChanged={setManufacturer}
                     />
                 </div>
 

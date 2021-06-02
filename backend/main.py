@@ -263,10 +263,10 @@ def product_insert():
     manufacturld = request.args.get('manufacturld')
     description = request.args.get('description')
     unitQty = request.args.get('unitQty')
-    Quantity = request.args.get('Quantity')
+    Quantity = request.args.get('quantity')
     bIsWeighted = request.args.get('bIsWeighted')
-    QtyInPackage = request.args.get('QtyInPackage')
-    ItemPrice = request.args.get('ItemPrice')
+    QtyInPackage = request.args.get('qtyInPackage')
+    ItemPrice = request.args.get('itemPrice')
     product.insert(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
                    ItemPrice)
     return "success"

@@ -3,7 +3,7 @@ import utils
 
 
 def insert(mysql: MySQL, name):
-    query = f"insert into country values({name})"
+    query = f"insert into country(country_name) values('{name}')"
     utils.execute_action(mysql, query)
 
 
