@@ -520,6 +520,7 @@ def the_number_os_branchs():
 @app.route('/query/total_profit_all_branchs')  #
 def total_profit_all_branchs():
     result = utils.execute_select(mysql, 'querys/total_profit_all_branchs.sql')
+    result[0]['total_profit'] = str(result[0]['total_profit'])
     return jsonify({'data': result})
 
 
