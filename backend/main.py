@@ -425,22 +425,11 @@ def count_of_employees_in_each_branch():
     return jsonify({'data': result})
 
 
-@app.route('/query/expenses')  #
-def expenses():
-    result = utils.execute_select(mysql, 'querys/expenses.sql')
-    return jsonify({'data': result})
-
-
-@app.route('/query/list_of_brenchs_in_specific_jerusalem')  #
-def list_of_brenchs_in_specific_jerusalem():
-    result = utils.execute_select(mysql, 'querys/list_of_brenchs_in_specific_jerusalem.sql')
-    return jsonify({'data': result})
-
-
 @app.route('/query/maneger_manege_branch_by_bigest_revenue')  #
 def maneger_manege_branch_by_bigest_revenue():
     result = utils.execute_select(mysql, 'querys/maneger_manege_branch_by_bigest_revenue.sql')
     return jsonify({'data': result})
+
 
 @app.route('/query/max_manu_cuntry')  #
 def max_manu_cuntry():
@@ -466,27 +455,24 @@ def num_of_town():
     return jsonify({'data': result})
 
 
-#######################################
-@app.route('/query/number_of_employs')
+@app.route('/query/number_of_employs')  #
 def number_of_employs():
     result = utils.execute_select(mysql, 'querys/number_of_employs.sql')
-    return jsonify({'data': str(result)})
-######################################
+    return jsonify({'data': result})
 
 
-######################################
-@app.route('/query/number_of_manager')
+@app.route('/query/number_of_manager')  #
 def number_of_manager():
     result = utils.execute_select(mysql, 'querys/number_of_manager.sql')
     return jsonify({'data': result})
-#######################################
 
-#######################################
-@app.route('/query/nums_emploeeys+sum_of_salary')
+
+@app.route('/query/nums_emploeeys+sum_of_salary')  #
 def nums_emploeeys_sum_of_salary():
     result = utils.execute_select(mysql, 'querys/nums_emploeeys+sum_of_salary.sql')
-    return jsonify({'data': str(result)})
-#######################################
+    result[0]['sum_of_salary'] = str(result[0]['sum_of_salary'])
+    return jsonify({'data': result})
+
 
 @app.route('/query/our_biggest_manufaturer')  #
 def our_biggest_manufaturer():
@@ -494,12 +480,10 @@ def our_biggest_manufaturer():
     return jsonify({'data': result})
 
 
-########################################
-@app.route('/query/over_ten_thousand')
+@app.route('/query/over_ten_thousand')  #
 def over_ten_thousand():
     result = utils.execute_select(mysql, 'querys/over_ten_thousand.sql')
-    return jsonify({'data': str(result)})
-#######################################
+    return jsonify({'data': result})
 
 
 @app.route('/query/product_of_min_manu')  #
@@ -507,13 +491,6 @@ def product_of_min_manu():
     result = utils.execute_select(mysql, 'querys/product_of_min_manu.sql')
     return jsonify({'data': result})
 
-
-##########################################
-@app.route('/query/publicity_price_of_specific_goal')
-def publicity_price_of_specific_goal():
-    result = utils.execute_select(mysql, 'querys/publicity_price_of_specific_goal.sql')
-    return jsonify({'data': str(result)})
-###########################################
 
 @app.route('/query/salary_of_employee')  #
 def salary_of_employee():
@@ -527,14 +504,12 @@ def The_branch_with_the_most_products():
     return jsonify({'data': result})
 
 
-##########################################
-@app.route('/query/sum_of_meters_in_all_sopers')
+@app.route('/query/sum_of_meters_in_all_sopers')  #
 def sum_of_meters_in_all_sopers():
     result = utils.execute_select(mysql, 'querys/sum_of_meters_in_all_sopers.sql')
-    return jsonify({'data': str(result)})
+    result[0]['sum_of_meters_in_all_sopers'] = str(result[0]['sum_of_meters_in_all_sopers'])
+    return jsonify({'data': result})
 
-
-####################################
 
 @app.route('/query/the_number_os_branchs')  #
 def the_number_os_branchs():
@@ -542,27 +517,33 @@ def the_number_os_branchs():
     return jsonify({'data': result})
 
 
-################################################
-@app.route('/query/total_profit_all_branchs')
+@app.route('/query/total_profit_all_branchs')  #
 def total_profit_all_branchs():
     result = utils.execute_select(mysql, 'querys/total_profit_all_branchs.sql')
-    return jsonify({'data': str(result)})
-
-
-########################################
-
-##############################################
-@app.route('/query/total_publicity_cost')
-def total_publicity_cost():
-    result = utils.execute_select(mysql, 'querys/total_publicity_cost.sql')
     return jsonify({'data': result})
 
 
-##############################################
+@app.route('/query/total_publicity_cost')  #
+def total_publicity_cost():
+    result = utils.execute_select(mysql, 'querys/total_publicity_cost.sql')
+    result[0]['Total_publicity_cost'] = str(result[0]['Total_publicity_cost'])
+    return jsonify({'data': result})
+
 
 # ************************************************************************************************
 # --------------------------------------------------querys with param----------------------------------------
 # ************************************************************************************************
+
+
+@app.route('/query/publicity_price_of_specific_goal')  #
+def publicity_price_of_specific_goal():
+    goal = request.args.get('goal')
+    with open(r"param/publicity_price_of_specific_goal.sql") as query:
+        with mysql.connection.cursor() as cursor:
+            temp = query.read().replace(":goal", goal)
+            cursor.execute(temp)
+            result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
 
 
 @app.route('/query/employees_earn_more_than_x')  #
@@ -599,7 +580,7 @@ def almost_out_of_stock_in_country():
     return jsonify({'data': result})
 
 
-@app.route('/query/products_of_specific_manu') #
+@app.route('/query/products_of_specific_manu')  #
 def products_of_specific_manu():
     manu = '"' + str(request.args.get('manu')) + '"'
     with open(r"param/products_of_specific_manu.sql") as query:
@@ -612,13 +593,43 @@ def products_of_specific_manu():
 
 @app.route('/query/prosucts_of_specific_country')  #
 def prosucts_of_specific_country():
-    country_name = '"'+str(request.args.get('country_name'))+'"'
+    country_name = '"' + str(request.args.get('country_name')) + '"'
     with open(r"param/prosucts_of_specific_country.sql") as query:
         with mysql.connection.cursor() as cursor:
-            temp = query.read().replace(":country_name",country_name)
+            temp = query.read().replace(":country_name", country_name)
             cursor.execute(temp)
             result = cursor_result_to_json(cursor)
     return jsonify({'data': result})
+
+
+@app.route('/query/list_of_brenchs_in_specific_town')  #
+def list_of_brenchs_in_specific_jerusalem():
+    town = '"' + str(request.args.get('town')) + '"'
+    with open(r"param/list_of_brenchs_in_specific_town.sql") as query:
+        with mysql.connection.cursor() as cursor:
+            temp = query.read().replace(":town", town)
+            cursor.execute(temp)
+            result = cursor_result_to_json(cursor)
+    return jsonify({'data': result})
+
+
+# ************************************************************************************************
+# --------------------------------------------------views----------------------------------------
+# ************************************************************************************************
+
+
+@app.route('/view/almost_out_of_stock_view') #
+def almost_out_of_stock_view():
+    result = utils.get_table(mysql, 'almost_out_of_stock_view')
+    return jsonify({'data': result})
+
+
+@app.route('/view/branch_manu_prod_amount_view') #
+def branch_manu_prod_amount_view():
+    result = utils.get_table(mysql, 'branch_manu_prod_amount')
+    return jsonify({'data': result})
+
+
 
 
 app.run('localhost', 5000)
