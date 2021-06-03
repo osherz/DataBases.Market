@@ -389,12 +389,6 @@ def shareholder_insert():
 # ************************************************************************************************
 # --------------------------------------------------querys----------------------------------------
 # ************************************************************************************************
-@app.route('/query/all_employees')  #
-def all_employees():
-    result = utils.execute_select(mysql, 'querys/all_employees.sql')
-    return jsonify({'data': result})
-
-
 @app.route('/query/avg_country_price')  #
 def avg_country_price():
     result = utils.execute_select(mysql, 'querys/avg_country_price.sql')
