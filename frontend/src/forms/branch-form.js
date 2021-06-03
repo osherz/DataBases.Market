@@ -6,11 +6,10 @@ import './form.css';
 export default function BranchForm(props) {
     const [town, setTown] = useState('');
     const [address, setAddress] = useState('');
-    const [manager, setManager] = useState('');
     const [area, setArea] = useState();
     const [revenue, setRevenue] = useState();
 
-    props.setParams(() => `manager_id=${manager['ID']}&town=${town}&address=${address}&area=${area}&revenue=${revenue}`);
+    props.setParams(() => `town=${town}&address=${address}&area=${area}&revenue=${revenue}`);
     return (
         <div>
             <form {...props}>
@@ -45,16 +44,6 @@ export default function BranchForm(props) {
                         value={area}
                         onChange={(ev) => setArea(ev.target.value)}
                         fullWidth
-                    />
-                </div>
-
-                <div className='form-control'>
-                    <AutocompleteComboBox
-                        tableName='employees'
-                        value={manager}
-                        label='Manager'
-                        columnToShow="name"
-                        handleValueChanged={setManager}
                     />
                 </div>
                 
