@@ -94,7 +94,8 @@ def employees_update():
     seniority = request.args.get('seniority')
     branch_id = request.args.get('branch_id')
     job = request.args.get('job')
-    employees.update(mysql, id, name, email, salary, seniority, branch_id, job)
+    is_manager = request.args.get('is_manager')
+    employees.update(mysql, id, name, email, salary, seniority, branch_id, job, is_manager)
     return "success"
 
 
@@ -107,7 +108,8 @@ def employees_insert():
     seniority = request.args.get('seniority')
     branch_id = request.args.get('branch_id')
     job = request.args.get('job')
-    employees.insert(mysql, name, email, salary, seniority, branch_id, job)
+    is_manager = request.args.get('is_manager')
+    employees.insert(mysql, name, email, salary, seniority, branch_id, job, is_manager)
     return "success"
 
 
