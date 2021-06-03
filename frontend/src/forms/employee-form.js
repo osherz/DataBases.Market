@@ -14,7 +14,7 @@ export default function EmployeeForm(props) {
     const [isManager, setIsManager] = useState('');
     const [branch, setBranch] = useState('');
 
-    props.setParams(() => `name=${name}&email=${email}&branch_id=${branch.id}&job=${job}&seniority=${seniority}&salary=${salary}&is_manager=${isManager}`);
+    props.setParams(() => `name=${name}&EMAIL=${email}&BARNCH_ID=${branch['ID']}&JOB=${job}&SENIORITY=${seniority}&SALARY=${salary}&is_manager=${isManager}`);
     return (
         <div>
             <form {...props}>

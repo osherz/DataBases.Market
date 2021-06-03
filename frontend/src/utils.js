@@ -3,7 +3,13 @@ export function isNumber(num) {
 }
 
 export function objectToGetParams(obj) {
-    const params = Object.keys(obj).map(key => `${key}=${obj[key]}`);
+    const params = Object.keys(obj).map(key => {
+        let value = obj[key];
+        if(value instanceof Date) {
+            value = dateNumberToString(value);
+        }
+        return `${key}=${value}`;
+    });
     return params.join('&');
 }
 

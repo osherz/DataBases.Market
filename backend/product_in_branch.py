@@ -11,8 +11,8 @@ def insert(mysql: MySQL, branch_id, product_barcode, amount_in_stock):
 def update(mysql: MySQL, id, branch_id, product_barcode, amount_in_stock):
     query = f"update product_in_branch " \
             f"set " \
-            f"branch_id={branch_id}" \
+            f"branch_id={branch_id}, " \
             f"product_barcode='{product_barcode}', " \
-            f"amount_in_stock={amount_in_stock}" \
+            f"amount_in_stock={amount_in_stock} " \
             f"where id={id}"
     utils.execute_action(mysql, query)
