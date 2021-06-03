@@ -50,10 +50,9 @@ def branchs_update():
     id = request.args.get('id')
     town = request.args.get('town')
     revenue = request.args.get('revenue')
-    manager_id = request.args.get('manager_id')
     address = request.args.get('address')
     area = request.args.get('area')
-    branchs.update(mysql, id, town, revenue, manager_id, address, area)
+    branchs.update(mysql, id, town, revenue, address, area)
     return "success"
 
 
@@ -63,10 +62,9 @@ def branchs_insert():
     id = request.args.get('id')
     town = request.args.get('town')
     revenue = request.args.get('revenue')
-    manager_id = request.args.get('manager_id')
     address = request.args.get('address')
     area = request.args.get('area')
-    branchs.insert(mysql, town, revenue, manager_id, address, area)
+    branchs.insert(mysql, town, revenue, address, area)
     return "success"
 
 
