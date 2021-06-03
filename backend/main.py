@@ -39,7 +39,7 @@ def branchs_select():
 # delete
 @app.route('/branchs/delete')
 def delete_row():
-    id = request.args.get('id')
+    id = request.args.get('ID')
     utils.delete_from_table(mysql, "branchs", id)
     return "success"
 
@@ -79,7 +79,7 @@ def employees_select():
 # delete
 @app.route('/employees/delete')
 def employees_delete_row():
-    id = request.args.get('id')
+    id = request.args.get('ID')
     utils.delete_from_table(mysql, "employees", id)
     return "success"
 
@@ -87,13 +87,13 @@ def employees_delete_row():
 # Update
 @app.route('/employees/update')
 def employees_update():
-    id = request.args.get('id')
+    id = request.args.get('ID')
     name = request.args.get('name')
-    email = request.args.get('email')
-    salary = request.args.get('salary')
-    seniority = request.args.get('seniority')
-    branch_id = request.args.get('branch_id')
-    job = request.args.get('job')
+    email = request.args.get('EMAIL')
+    salary = request.args.get('SALARY')
+    seniority = request.args.get('SENIORITY')
+    branch_id = request.args.get('BARNCH_ID')
+    job = request.args.get('JOB')
     is_manager = request.args.get('is_manager')
     employees.update(mysql, id, name, email, salary, seniority, branch_id, job, is_manager)
     return "success"
@@ -103,11 +103,11 @@ def employees_update():
 @app.route('/employees/insert')
 def employees_insert():
     name = request.args.get('name')
-    email = request.args.get('email')
-    salary = request.args.get('salary')
-    seniority = request.args.get('seniority')
-    branch_id = request.args.get('branch_id')
-    job = request.args.get('job')
+    email = request.args.get('EMAIL')
+    salary = request.args.get('SALARY')
+    seniority = request.args.get('SENIORITY')
+    branch_id = request.args.get('BARNCH_ID')
+    job = request.args.get('JOB')
     is_manager = request.args.get('is_manager')
     employees.insert(mysql, name, email, salary, seniority, branch_id, job, is_manager)
     return "success"

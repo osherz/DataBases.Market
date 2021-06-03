@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function TableManagement({ tableName, enableManagement=true }) {
+export default function TableManagement({ tableName, enableManagement = true }) {
     let getParams = null;
     const classes = useStyles();
     const [rows, setRows] = useState([]);
@@ -68,10 +68,8 @@ export default function TableManagement({ tableName, enableManagement=true }) {
         if (selectionModel.length > 0) {
             requests.deleteRows(tableName, idColName, selectionModel,
                 (errorRows) => {
-                    const hasErrors = errorRows.length > 0;
-                    setOpenSuccessBar(!hasErrors);
-                    setOpenFailedBar(hasErrors);
-                    fetchData();
+                    setSelectionModel([]);
+                    updateStatus(errorRows.length <= 0 ? 'success' : 'failed');
                 });
         }
     };
@@ -134,8 +132,8 @@ export default function TableManagement({ tableName, enableManagement=true }) {
                     Operation failed!
                 </Alert>
             </Snackbar>
-            
-            <DataTable 
+
+            <DataTable
                 rows={rows}
                 idColNameChanged={setIdColName}
                 onEditCellChanged={cellChanged}

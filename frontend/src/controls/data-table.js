@@ -12,7 +12,6 @@ export default function DataTable({ rows, onEditCellChanged, onSelectionModelCha
         const fields = Object.keys(rowToCheck);
 
         idColName = fields.filter((colName) => idColNamesOptions.includes(colName))[0];
-        idColNameChanged(idColName);
 
         columns = fields.map((colName) => {
             const editable = colName !== idColName;
@@ -27,11 +26,15 @@ export default function DataTable({ rows, onEditCellChanged, onSelectionModelCha
         changeColDateToDateType(rows);
     }
 
+    useEffect(() => idColNameChanged(idColName), [idColName]);
+
 
     return (
         <DataGrid
             rows={rows}
-            getRowId={(row) => row[idColName]}
+            getRowId={(row) =>
+                row["ID"] ? row["ID"] : row["id"] ? row["id"] : row["barcode"]
+            }
             columns={columns}
             onEditCellChangeCommitted={onEditCellChanged}
             disableSelectionOnClick={true}

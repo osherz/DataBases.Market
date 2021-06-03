@@ -2,7 +2,7 @@ from flask_mysqldb import MySQL
 import utils
 
 
-def insert(mysql: MySQL, town, revenue, manager_id, address, area):
+def insert(mysql: MySQL, town, revenue, address, area):
     query = f"insert into branchs(town,revenue,address,area) " \
             f"values('{town}',{revenue},'{address}',{area})"
     utils.execute_action(mysql, query)

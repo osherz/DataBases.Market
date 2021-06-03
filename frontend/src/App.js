@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Typography, Toolbar, IconButton, List } from '@material-ui/core';
+import { AppBar, Typography, Toolbar, IconButton, List, Breadcrumbs } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
@@ -79,10 +79,14 @@ function App() {
   const theme = useTheme();
   const [openMenu, setOpenMenu] = useState(true);
   const [tableNameToManage, setTableNameToManage] = useState('');
+  const [directive, setDirective] = useState([]);
 
   const toggleMenu = () => setOpenMenu(!openMenu);
   const closeMenu = () => setOpenMenu(false);
-  const changeTableToManage = (tableName) => setTableNameToManage(tableName);
+  const changeTableToManage = (tableName) => {
+    setTableNameToManage(tableName);
+    setDirective(['Tables', tableName]);
+  };
 
   const barHeader = "Market Data Management";
   const tablesNames = [
@@ -99,76 +103,84 @@ function App() {
   const customQueries = ['a', 'b'];
 
   return (
-    
-      <div>
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: openMenu,
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleMenu}
-              edge="start"
-            >
-              <MenuIcon />
-            </IconButton>
+
+    <div>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: openMenu,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleMenu}
+            edge="start"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Breadcrumbs aria-label="breadcrumb" style={{ color: 'white' }}>
             <Typography variant="h6" noWrap>
               {barHeader}
             </Typography>
-          </Toolbar>
-        </AppBar>
+            {
+              directive.map(text => (
+                <Typography variant="h6" noWrap>
+                  {text}
+                </Typography>
+              ))}
+          </Breadcrumbs>
+        </Toolbar>
+      </AppBar>
 
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={openMenu}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div>
-            <IconButton onClick={closeMenu}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <ListSubheader component="div" id="tables-to-manage-subheader">
-              Tables To Manage
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={openMenu}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div>
+          <IconButton onClick={closeMenu}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <ListSubheader component="div" id="tables-to-manage-subheader">
+            Tables To Manage
         </ListSubheader>
-            {tablesNames.map((text, index) => (
-              <ListItem button key={text} onClick={() => changeTableToManage(text)}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <ListSubheader component="div" id="custom-queries-subheader">
-            Custom Queries
+          {tablesNames.map((text, index) => (
+            <ListItem button key={text} onClick={() => changeTableToManage(text)}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <ListSubheader component="div" id="custom-queries-subheader">
+          Custom Queries
         </ListSubheader>
-          <List >
-            {customQueries.map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
+        <List >
+          {customQueries.map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
 
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: openMenu,
-          })}
-        >
-          <div className={classes.drawerHeader} />
-          <TableManagement tableName={tableNameToManage} />
-        </main>
-      </div>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: openMenu,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+        <TableManagement tableName={tableNameToManage} />
+      </main>
+    </div>
   );
 }
 
