@@ -35,7 +35,7 @@ def get_table(mysql: MySQL, table_name):
     return result
 
 
-def execute_select(mysql: MySQL,path, params={}):
+def execute_select(mysql: MySQL, path, params={}):
     with open(path) as query:
         with mysql.connection.cursor() as cursor:
             cursor.execute(query.read())

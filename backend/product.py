@@ -2,9 +2,11 @@ from flask_mysqldb import MySQL
 import utils
 
 
-def insert(mysql: MySQL, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted,
+def insert(mysql: MySQL, barcode, name, manufacturld, description, unitQty, quantity, bIsWeighted,
            QtyInPackage, ItemPrice):
-    query = f"insert into product values({barcode},{name},{manufacturld},{description},{unitQty},{Quantity},\
+    query = f"insert into product(barcode,name,manufacturld,description,unitQty,Quantity,\
+    bIsWeighted,QtyInPackage,ItemPrice) " \
+            f"values({barcode},'{name}',{manufacturld},'{description}','{unitQty}',{quantity},\
     {bIsWeighted},{QtyInPackage},{ItemPrice})"
     utils.execute_action(mysql, query)
 
@@ -23,8 +25,3 @@ def update(mysql: MySQL, barcode, name, manufacturld, description, unitQty, Quan
             f"ItemPrice={ItemPrice} " \
             f"where barcode='{barcode}'"
     utils.execute_action(mysql, query)
-
-
-
-
-

@@ -8,7 +8,7 @@ export default function ProductInBranchForm(props) {
     const [product, setProduct] = useState('');
     const [amount, setAmount] = useState();
 
-    props.setParams(() => `branch_id=${branch.id}&product_barcode=${product.barcode}&amount=${amount}`);
+    props.setParams(() => `branch_id=${branch['ID']}&product_barcode=${product.barcode}&amount_in_stock=${amount}`);
     return (
         <div>
             <form {...props}>
@@ -32,9 +32,9 @@ export default function ProductInBranchForm(props) {
 
                 <div className='form-control'>
                     <TextField
-                        name='price'
+                        name='amount'
                         variant="outlined"
-                        label="Price"
+                        label="Amount"
                         type="number"
                         value={amount}
                         onChange={(ev) => setAmount(ev.target.value)}

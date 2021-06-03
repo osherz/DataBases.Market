@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function TableManagement({ tableName }) {
+export default function TableManagement({ tableName, enableManagement=true }) {
     let getParams = null;
     const classes = useStyles();
 
@@ -46,7 +46,7 @@ export default function TableManagement({ tableName }) {
                         type: fieldType(colName, rowToCheck[colName]),
                         headerName: textToTitle(colName),
                         width: 150,
-                        editable: editable,
+                        editable: editable && enableManagement,
                     };
                 })
             );
@@ -120,7 +120,7 @@ export default function TableManagement({ tableName }) {
     }, [tableName]);
     return (
         <div style={{ height: "800px", width: "100%" }}>
-            <div>
+            <div hidden={!enableManagement}>
                 <Button
                     variant="contained"
                     color="secondary"
@@ -172,7 +172,7 @@ export default function TableManagement({ tableName }) {
                 }}
                 selectionModel={selectionModel}
                 autoPageSize
-                checkboxSelection
+                checkboxSelection={enableManagement}
             />
 
             <FormDialog title={'Insert to ' + tableName}

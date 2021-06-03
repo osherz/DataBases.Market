@@ -3,7 +3,7 @@ import utils
 
 
 def insert(mysql: MySQL, price, location, goal):
-    query = f"insert into publicity values({price},{location},{goal})"
+    query = f"insert into publicity(price, location, goal) values({price},'{location}',{goal})"
     utils.execute_action(mysql, query)
 
 

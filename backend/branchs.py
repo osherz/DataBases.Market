@@ -3,7 +3,8 @@ import utils
 
 
 def insert(mysql: MySQL, town, revenue, manager_id, address, area):
-    query = f"insert into branchs values({town},{revenue},{manager_id},{address},{area})"
+    query = f"insert into branchs(town,revenue,manager_id,address,area) " \
+            f"values('{town}',{revenue},{manager_id},'{address}',{area})"
     utils.execute_action(mysql, query)
 
 

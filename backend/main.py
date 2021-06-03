@@ -66,7 +66,7 @@ def branchs_insert():
     manager_id = request.args.get('manager_id')
     address = request.args.get('address')
     area = request.args.get('area')
-    branchs.insert(mysql, id, town, revenue, manager_id, address, area)
+    branchs.insert(mysql, town, revenue, manager_id, address, area)
     return "success"
 
 
@@ -263,10 +263,10 @@ def product_insert():
     manufacturld = request.args.get('manufacturld')
     description = request.args.get('description')
     unitQty = request.args.get('unitQty')
-    Quantity = request.args.get('Quantity')
+    Quantity = request.args.get('quantity')
     bIsWeighted = request.args.get('bIsWeighted')
-    QtyInPackage = request.args.get('QtyInPackage')
-    ItemPrice = request.args.get('ItemPrice')
+    QtyInPackage = request.args.get('qtyInPackage')
+    ItemPrice = request.args.get('itemPrice')
     product.insert(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
                    ItemPrice)
     return "success"
@@ -306,7 +306,7 @@ def product_in_branch_insert():
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    product_in_branch.update(mysql, branch_id, product_barcode, amount_in_stock)
+    product_in_branch.insert(mysql, branch_id, product_barcode, amount_in_stock)
     return "success"
 
 
@@ -344,7 +344,7 @@ def publicity_insert():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    publicity.update(mysql, price, location, goal)
+    publicity.insert(mysql, price, location, goal)
     return "success"
 
 
@@ -379,10 +379,10 @@ def shareholder_update():
 # Insert
 @app.route('/shareholder/insert')
 def shareholder_insert():
-    STOCK = request.args.get('STOCK')
-    EMAIL = request.args.get('EMAIL')
-    NAME = request.args.get('NAME')
-    shareholder.update(mysql, STOCK, EMAIL, NAME)
+    STOCK = request.args.get('stock')
+    EMAIL = request.args.get('email')
+    NAME = request.args.get('name')
+    shareholder.insert(mysql, STOCK, EMAIL, NAME)
     return "success"
 
 
@@ -448,7 +448,6 @@ def maneger_manege_branch_by_bigest_revenue():
     result = utils.execute_select(mysql, 'querys/maneger_manege_branch_by_bigest_revenue.sql')
     return jsonify({'data': result})
 
-
 @app.route('/query/max_manu_cuntry')  #
 def max_manu_cuntry():
     result = utils.execute_select(mysql, 'querys/max_manu_cuntry.sql')
@@ -473,24 +472,27 @@ def num_of_town():
     return jsonify({'data': result})
 
 
-@app.route('/query/number_of_employs')  #
+#######################################
+@app.route('/query/number_of_employs')
 def number_of_employs():
     result = utils.execute_select(mysql, 'querys/number_of_employs.sql')
-    return jsonify({'data': result})
+    return jsonify({'data': str(result)})
+######################################
 
 
+######################################
 @app.route('/query/number_of_manager')
 def number_of_manager():
     result = utils.execute_select(mysql, 'querys/number_of_manager.sql')
     return jsonify({'data': result})
+#######################################
 
-
+#######################################
 @app.route('/query/nums_emploeeys+sum_of_salary')
 def nums_emploeeys_sum_of_salary():
     result = utils.execute_select(mysql, 'querys/nums_emploeeys+sum_of_salary.sql')
-    result[0]['sum_of_salary']=int(result[0]['sum_of_salary'])
-    return jsonify({'data': result})
-
+    return jsonify({'data': str(result)})
+#######################################
 
 @app.route('/query/our_biggest_manufaturer')  #
 def our_biggest_manufaturer():
@@ -498,13 +500,11 @@ def our_biggest_manufaturer():
     return jsonify({'data': result})
 
 
-#######################################
+########################################
 @app.route('/query/over_ten_thousand')
 def over_ten_thousand():
     result = utils.execute_select(mysql, 'querys/over_ten_thousand.sql')
     return jsonify({'data': str(result)})
-
-
 #######################################
 
 
@@ -519,8 +519,6 @@ def product_of_min_manu():
 def publicity_price_of_specific_goal():
     result = utils.execute_select(mysql, 'querys/publicity_price_of_specific_goal.sql')
     return jsonify({'data': str(result)})
-
-
 ###########################################
 
 @app.route('/query/salary_of_employee')  #
@@ -607,7 +605,7 @@ def almost_out_of_stock_in_country():
     return jsonify({'data': result})
 
 
-@app.route('/query/products_of_specific_manu')  #
+@app.route('/query/products_of_specific_manu') #
 def products_of_specific_manu():
     manu = '"' + str(request.args.get('manu')) + '"'
     with open(r"param/products_of_specific_manu.sql") as query:
@@ -620,13 +618,13 @@ def products_of_specific_manu():
 
 @app.route('/query/prosucts_of_specific_country')  #
 def prosucts_of_specific_country():
-    country_name = '"' + str(request.args.get('country_name')) + '"'
+    country_name = '"'+str(request.args.get('country_name'))+'"'
     with open(r"param/prosucts_of_specific_country.sql") as query:
         with mysql.connection.cursor() as cursor:
-            temp = query.read().replace(":country_name", country_name)
+            temp = query.read().replace(":country_name",country_name)
             cursor.execute(temp)
             result = cursor_result_to_json(cursor)
     return jsonify({'data': result})
 
 
-app.run('localhost', 5001)
+app.run('localhost', 5000)

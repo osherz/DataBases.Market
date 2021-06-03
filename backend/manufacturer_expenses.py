@@ -3,7 +3,8 @@ import utils
 
 
 def insert(mysql, manufacturer_id, expenses, date_of_expenses):
-    query = f"insert into manufacturer_expenses values({manufacturer_id},{expenses},{date_of_expenses})"
+    query = f"insert into manufacturer_expenses(manufacturer_id, expenses, date_of_expenses) " \
+            f"values({manufacturer_id},{expenses},'{date_of_expenses}')"
     utils.execute_action(mysql, query)
 
 
