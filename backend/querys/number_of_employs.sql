@@ -1,2 +1,2 @@
-SELECT ID, salary, max(SENIORITY)
-FROM EMPLOYEES
+SELECT count(*) as number_fo_employees
+FROM employees

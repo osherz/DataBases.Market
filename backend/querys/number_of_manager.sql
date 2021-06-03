@@ -1,2 +1,2 @@
-SELECT COUNT(MANAGER_NAME) as number_of_manager
+SELECT COUNT(MANAGER_ID) as number_of_manager
 FROM branchs

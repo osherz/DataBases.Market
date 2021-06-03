@@ -449,13 +449,6 @@ def maneger_manege_branch_by_bigest_revenue():
     return jsonify({'data': result})
 
 
-##########################################
-@app.route('/query/manufacturer_expenses')
-def manufacturer_expenses():
-    result = utils.execute_select(mysql, 'querys/manufacturer_expenses.sql')
-    return jsonify({'data': str(result)})
-###########################################
-
 @app.route('/query/max_manu_cuntry')  #
 def max_manu_cuntry():
     result = utils.execute_select(mysql, 'querys/max_manu_cuntry.sql')
@@ -480,27 +473,24 @@ def num_of_town():
     return jsonify({'data': result})
 
 
-#######################################
-@app.route('/query/number_of_employs')
+@app.route('/query/number_of_employs')  #
 def number_of_employs():
     result = utils.execute_select(mysql, 'querys/number_of_employs.sql')
-    return jsonify({'data': str(result)})
-######################################
+    return jsonify({'data': result})
 
 
-######################################
 @app.route('/query/number_of_manager')
 def number_of_manager():
     result = utils.execute_select(mysql, 'querys/number_of_manager.sql')
     return jsonify({'data': result})
-#######################################
 
-#######################################
+
 @app.route('/query/nums_emploeeys+sum_of_salary')
 def nums_emploeeys_sum_of_salary():
     result = utils.execute_select(mysql, 'querys/nums_emploeeys+sum_of_salary.sql')
-    return jsonify({'data': str(result)})
-#######################################
+    result[0]['sum_of_salary']=int(result[0]['sum_of_salary'])
+    return jsonify({'data': result})
+
 
 @app.route('/query/our_biggest_manufaturer')  #
 def our_biggest_manufaturer():
@@ -508,11 +498,13 @@ def our_biggest_manufaturer():
     return jsonify({'data': result})
 
 
-########################################
+#######################################
 @app.route('/query/over_ten_thousand')
 def over_ten_thousand():
     result = utils.execute_select(mysql, 'querys/over_ten_thousand.sql')
     return jsonify({'data': str(result)})
+
+
 #######################################
 
 
@@ -527,6 +519,8 @@ def product_of_min_manu():
 def publicity_price_of_specific_goal():
     result = utils.execute_select(mysql, 'querys/publicity_price_of_specific_goal.sql')
     return jsonify({'data': str(result)})
+
+
 ###########################################
 
 @app.route('/query/salary_of_employee')  #
@@ -613,7 +607,7 @@ def almost_out_of_stock_in_country():
     return jsonify({'data': result})
 
 
-@app.route('/query/products_of_specific_manu') #
+@app.route('/query/products_of_specific_manu')  #
 def products_of_specific_manu():
     manu = '"' + str(request.args.get('manu')) + '"'
     with open(r"param/products_of_specific_manu.sql") as query:
@@ -626,13 +620,13 @@ def products_of_specific_manu():
 
 @app.route('/query/prosucts_of_specific_country')  #
 def prosucts_of_specific_country():
-    country_name = '"'+str(request.args.get('country_name'))+'"'
+    country_name = '"' + str(request.args.get('country_name')) + '"'
     with open(r"param/prosucts_of_specific_country.sql") as query:
         with mysql.connection.cursor() as cursor:
-            temp = query.read().replace(":country_name",country_name)
+            temp = query.read().replace(":country_name", country_name)
             cursor.execute(temp)
             result = cursor_result_to_json(cursor)
     return jsonify({'data': result})
 
 
-app.run('localhost', 5000)
+app.run('localhost', 5001)
