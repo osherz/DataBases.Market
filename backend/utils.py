@@ -43,6 +43,6 @@ def execute_select(mysql: MySQL, path, params={}):
     return result
 
 
-def delete_from_table(mysql: MySQL, table_name, id):
-    query = f"DELETE FROM {table_name} WHERE id={id}"
+def delete_from_table(mysql: MySQL, table_name, id, id_col_name='id'):
+    query = f"DELETE FROM {table_name} WHERE {id_col_name}={id}"
     execute_action(mysql, query)

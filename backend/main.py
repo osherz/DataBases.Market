@@ -234,7 +234,7 @@ def product_select():
 @app.route('/product/delete')
 def product_delete_row():
     barcode = request.args.get('barcode')
-    utils.delete_from_table(mysql, "product", barcode)
+    utils.delete_from_table(mysql, "product", barcode, 'barcode')
     return "success"
 
 

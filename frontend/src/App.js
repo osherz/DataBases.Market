@@ -73,6 +73,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const queries = [
+
+];
+
 
 function App() {
   const classes = useStyles();
@@ -80,6 +84,7 @@ function App() {
   const [openMenu, setOpenMenu] = useState(true);
   const [tableNameToManage, setTableNameToManage] = useState('');
   const [directive, setDirective] = useState([]);
+
 
   const toggleMenu = () => setOpenMenu(!openMenu);
   const closeMenu = () => setOpenMenu(false);
@@ -183,5 +188,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
