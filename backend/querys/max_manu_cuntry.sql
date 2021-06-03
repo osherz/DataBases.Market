@@ -2,7 +2,7 @@ select C.id as id, C.country_name, count(C.id) as product_cnt
 from product
          join Manufacturer on product.manufacturld = Manufacturer.id
          join country C on Manufacturer.countryid = C.id
-group by Manufacturer.id
+group by C.id, C.country_name
 order by product_cnt desc
 limit 1
 

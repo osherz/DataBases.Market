@@ -1,4 +1,3 @@
-SELECT ID,PERCENTAGE
-FROM shareholder
-ORDER BY PERCENTAGE DESC
-limit 1
+select price
+from publicity
+where goal = :goal;

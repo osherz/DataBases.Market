@@ -1,6 +1,8 @@
-select name, EMAIL, TOWN, ADDRESS
-from employees join branchs b on b.ID = employees.BARNCH_ID
-WHERE employees.ID in (select MANAGER_ID
-            from branchs
-            WHERE REVENUE = (select MAX(REVENUE)
-                             from branchs))
+select name, EMAIL, TOWN, ADDRESS, REVENUE
+from employees
+         join branchs b on b.ID = employees.BARNCH_ID
+WHERE employees.is_manager
+  and employees.ID in (select ID
+                       from branchs
+                       WHERE REVENUE = (select MAX(REVENUE)
+                                        from branchs))

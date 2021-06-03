@@ -1,3 +1,3 @@
 
-Select count(town) as num_of_town
+Select count(distinct town) as num_of_town
 From branchs;
