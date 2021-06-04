@@ -7,11 +7,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import {  ListItemText, ListSubheader } from '@material-ui/core';
+import { ListItemText, ListSubheader } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import TableManagement from './pages/table-management';
 import './App.css';
 import QueryTable from './pages/query-table';
+import MainPage from './pages/main-page';
 
 const drawerWidth = 240;
 
@@ -72,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const MAIN = 'main';
 const MANAGEMENT = 'management';
 const QUERIES = 'queries';
 
@@ -109,7 +111,7 @@ function App() {
   const [tableNameToManage, setTableNameToManage] = useState('');
   const [queryFullPath, setQueryFullPath] = useState('');
   const [directive, setDirective] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState('');
+  const [currentCategory, setCurrentCategory] = useState(MAIN);
 
   const toggleMenu = () => setOpenMenu(!openMenu);
   const closeMenu = () => setOpenMenu(false);
@@ -119,7 +121,7 @@ function App() {
     setDirective(['Tables', tableName]);
   };
   const changeQuery = (queryName) => {
-    if(currentCategory !== QUERIES) setCurrentCategory(QUERIES);
+    if (currentCategory !== QUERIES) setCurrentCategory(QUERIES);
     setQueryFullPath('query/' + queryName);
     setDirective(['Queries', queryName]);
   };
@@ -138,6 +140,7 @@ function App() {
   ];
 
   const mainDisplay = {
+    [MAIN]: <MainPage />,
     [MANAGEMENT]: <TableManagement tableName={tableNameToManage} />,
     [QUERIES]: <QueryTable fullPath={queryFullPath} />
   }
@@ -190,9 +193,12 @@ function App() {
         </div>
         <Divider />
         <List>
+        <ListItem button key="main" onClick={() => setCurrentCategory(MAIN)}>
+              <ListItemText primary="Main" />
+            </ListItem>
           <ListSubheader component="div" id="tables-to-manage-subheader">
             Tables To Manage
-        </ListSubheader>
+          </ListSubheader>
           {tablesNames.map((text, index) => (
             <ListItem button key={text} onClick={() => changeTableToManage(text)}>
               <ListItemText primary={text} />
