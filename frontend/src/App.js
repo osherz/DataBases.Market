@@ -7,12 +7,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import { ListItemIcon, ListItemText, ListSubheader } from '@material-ui/core';
+import {  ListItemText, ListSubheader } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import TableManagement from './table-management';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import TableManagement from './pages/table-management';
 import './App.css';
+import QueryTable from './pages/query-table';
 
 const drawerWidth = 240;
 
@@ -73,8 +72,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const queries = [
+const MANAGEMENT = 'management';
+const QUERIES = 'queries';
 
+const customQueries = [
+  'avg_country_price',
+  'avg_manu_price',
+  'best_manufaturer_of_each_branch',
+  'big_seniority',
+  'biggest_shareholders',
+  'count_of_employees_in_each_branch',
+  'maneger_manege_branch_by_bigest_revenue',
+  'max_manu_cuntry',
+  'max_manu_product',
+  'min_salary',
+  'num_of_town',
+  'number_of_employs',
+  'number_of_manager',
+  'nums_emploeeys+sum_of_salary',
+  'our_biggest_manufaturer',
+  'over_ten_thousand',
+  'product_of_min_manu',
+  'salary_of_employee',
+  'The_branch_with_the_most_products',
+  'sum_of_meters_in_all_sopers',
+  'the_number_os_branchs',
+  'total_profit_all_branchs',
+  'total_publicity_cost'
 ];
 
 
@@ -83,14 +107,21 @@ function App() {
   const theme = useTheme();
   const [openMenu, setOpenMenu] = useState(true);
   const [tableNameToManage, setTableNameToManage] = useState('');
+  const [queryFullPath, setQueryFullPath] = useState('');
   const [directive, setDirective] = useState([]);
-
+  const [currentCategory, setCurrentCategory] = useState('');
 
   const toggleMenu = () => setOpenMenu(!openMenu);
   const closeMenu = () => setOpenMenu(false);
   const changeTableToManage = (tableName) => {
+    setCurrentCategory(MANAGEMENT);
     setTableNameToManage(tableName);
     setDirective(['Tables', tableName]);
+  };
+  const changeQuery = (queryName) => {
+    if(currentCategory !== QUERIES) setCurrentCategory(QUERIES);
+    setQueryFullPath('query/' + queryName);
+    setDirective(['Queries', queryName]);
   };
 
   const barHeader = "Market Data Management";
@@ -105,7 +136,11 @@ function App() {
     'publicity',
     'shareholder'
   ];
-  const customQueries = ['a', 'b'];
+
+  const mainDisplay = {
+    [MANAGEMENT]: <TableManagement tableName={tableNameToManage} />,
+    [QUERIES]: <QueryTable fullPath={queryFullPath} />
+  }
 
   return (
 
@@ -170,7 +205,7 @@ function App() {
         </ListSubheader>
         <List >
           {customQueries.map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text} onClick={() => changeQuery(text)}>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -183,7 +218,9 @@ function App() {
         })}
       >
         <div className={classes.drawerHeader} />
-        <TableManagement tableName={tableNameToManage} />
+        <div style={{ height: "800px", width: "100%" }}>
+          {mainDisplay[currentCategory]}
+        </div>
       </main>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import AutocompleteComboBox from '../controls/autocomplete-combo-box';
 import './form.css';
 
 export default function BranchForm(props) {

@@ -1,17 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import * as utils from "../utils";
 
-export default function DataTable({ rows, onEditCellChanged, onSelectionModelChange, selectionModel, enableManagement, idColNameChanged }) {
+export default function DataTable({ rows, onEditCellChanged = () => { }, onSelectionModelChange = () => { }, selectionModel, enableManagement, idColNameChanged = () => { } }) {
     const idColNamesOptions = ["id", "ID", "Id", "barcode", "Barcode", "BARCODE"];
     let columns = [];
     let idColName = '';
 
     if (rows.length > 0) {
         const rowToCheck = rows[0];
-        const fields = Object.keys(rowToCheck);
+        let fields = Object.keys(rowToCheck);
 
-        idColName = fields.filter((colName) => idColNamesOptions.includes(colName))[0];
+        const idColsArry = fields.filter((colName) => idColNamesOptions.includes(colName));
+        if (idColsArry.length > 0) {
+            idColName = idColsArry[0];
+        } else {
+            idColName = 'id'
+            for (let i = 0; i < rows.length; i++) {
+                rows[i] = { [idColName]: i + 1, ...rows[i] };
+            }
+        }
+
+        // Move id column to start
+        utils.removeFromList(fields, idColName);
+        fields = [idColName, ...fields];
 
         columns = fields.map((colName) => {
             const editable = colName !== idColName;
@@ -19,14 +31,17 @@ export default function DataTable({ rows, onEditCellChanged, onSelectionModelCha
                 field: colName,
                 type: fieldType(colName, rowToCheck[colName]),
                 headerName: textToTitle(colName),
-                width: 150,
+                // width: 150,
+                flex:1,
+                headerAlign:'left',
+                align:'left',
                 editable: editable && enableManagement,
             };
         });
         changeColDateToDateType(rows);
     }
 
-    useEffect(() => idColNameChanged(idColName), [idColName]);
+    useEffect(() => idColNameChanged(idColName), [idColName, idColNameChanged]);
 
 
     return (
@@ -41,6 +56,7 @@ export default function DataTable({ rows, onEditCellChanged, onSelectionModelCha
             onSelectionModelChange={onSelectionModelChange}
             selectionModel={selectionModel}
             autoPageSize
+            size
             checkboxSelection={enableManagement}
         />
     );

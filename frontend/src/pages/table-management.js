@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import * as utils from "./utils";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { NoteAdd } from "@material-ui/icons";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import FormDialog from "./forms/form-dialog";
-import FormSelector from './forms/form-selector';
-import * as requests from './requests';
-import DataTable from "./controls/data-table";
+import FormDialog from "../forms/form-dialog";
+import FormSelector from '../forms/form-selector';
+import * as requests from '../requests';
+import DataTable from "../controls/data-table";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -29,19 +28,19 @@ export default function TableManagement({ tableName, enableManagement = true }) 
     const [enableDelete, setEnableDelete] = useState(false);
     const [openInsertForm, setOpenInsertForm] = useState(false);
 
-    useEffect(() => setEnableDelete(selectionModel.length > 0), [selectionModel]);
+    useEffect(() => setEnableDelete(selectionModel.length > 0), [selectionModel, setEnableDelete]);
 
-    const fetchData = () => {
+    const fetchData = useCallback(() => {
         fetch(`/${tableName}/select`)
             .then((result) => result.json())
             .then((data) => {
                 setRows(data["data"]);
             });
-    };
+    }, [tableName]);
 
     const cellChanged = ({ id, field, props }) => {
         rows.forEach((row) => {
-            if (row[idColName] == id) {
+            if (row[idColName] === id) {
                 const newRow = { ...row };
                 newRow[field] = props.value;
                 updateRow(newRow);
@@ -90,9 +89,9 @@ export default function TableManagement({ tableName, enableManagement = true }) 
 
     useEffect(() => {
         fetchData();
-    }, [tableName]);
+    }, [tableName, fetchData]);
     return (
-        <div style={{ height: "800px", width: "100%" }}>
+        <>
             <div hidden={!enableManagement}>
                 <Button
                     variant="contained"
@@ -154,7 +153,7 @@ export default function TableManagement({ tableName, enableManagement = true }) 
                     tableName={tableName}
                 />
             </FormDialog>
-        </div>
+        </>
     );
 }
 
