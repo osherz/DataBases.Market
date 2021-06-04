@@ -520,6 +520,7 @@ def the_number_os_branchs():
 @app.route('/query/total_profit_all_branchs')  #
 def total_profit_all_branchs():
     result = utils.execute_select(mysql, 'querys/total_profit_all_branchs.sql')
+    result[0]['total_profit'] = str(result[0]['total_profit'])
     return jsonify({'data': result})
 
 
@@ -618,18 +619,49 @@ def list_of_brenchs_in_specific_jerusalem():
 # ************************************************************************************************
 
 
-@app.route('/view/almost_out_of_stock_view') #
+@app.route('/view/almost_out_of_stock_view')  #
 def almost_out_of_stock_view():
     result = utils.get_table(mysql, 'almost_out_of_stock_view')
     return jsonify({'data': result})
 
 
-@app.route('/view/branch_manu_prod_amount_view') #
+@app.route('/view/branch_manu_prod_amount_view')  #
 def branch_manu_prod_amount_view():
     result = utils.get_table(mysql, 'branch_manu_prod_amount')
     return jsonify({'data': result})
 
 
+# ************************************************************************************************
+# --------------------------------------------------procudure----------------------------------------
+# ************************************************************************************************
+
+
+@app.route('/procedure/addProductsToBranch')
+def addProductsToBranch():
+    barcode = request.args.get('barcode')
+    amount = request.args.get('amount')
+    price = request.args.get('price')
+    branchId = request.args.get('branchId')
+    datee = request.args.get('datee')
+    with mysql.connection.cursor() as cursor:
+        try:
+            cursor.callproc('addProductsToBranch', [barcode, amount, price, branchId, datee])
+            return "success"
+        except():
+            return "failed"
+
+
+@app.route('/procedure/buyProductFromBranch')
+def buyProductFromBranch():
+    barcode = request.args.get('barcode')
+    amount = request.args.get('amount')
+    branchId = request.args.get('branchId')
+    with mysql.connection.cursor() as cursor:
+        try:
+            cursor.callproc('addProductsToBranch', [barcode, amount, branchId])
+            return "success"
+        except():
+            return "failed"
 
 
 app.run('localhost', 5000)
