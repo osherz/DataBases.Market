@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import '../form.css';
 
-export default function AlmostOutOfStock(props) {
+export default function AlmostOutOfStockForm(props) {
     const [minAmount, setMinAmount] = useState(0);
 
     props.setParams(() => `min_amount=${minAmount}`);

@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import AutocompleteComboBox from '../../controls/autocomplete-combo-box';
 import '../form.css';
 
-export default function AlmostOutOfStockInCountry({ flexDirection = 'column', ...props }) {
+export default function AlmostOutOfStockInCountryForm({ flexDirection = 'column', ...props }) {
     const [minAmount, setMinAmount] = useState(0);
     const [country, setCountry] = useState('');
 
