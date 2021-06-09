@@ -114,6 +114,10 @@ const customParamsQueries = [
 
 ];
 
+const views = [
+  'almost_out_of_stock_view',
+  'branch_manu_prod_amount_view'
+]
 
 function App() {
   const classes = useStyles();

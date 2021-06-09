@@ -4,21 +4,9 @@ import DataDisplay from "../controls/data-display";
 import QueriesSelector from "../forms/queries/queries-selector";
 
 export default function QueryTable({ queryName, hasParams = false }) {
-    const [rows, setRows] = useState([]);
+    const [params, setParams] = useState('');
     let getParams = () => { };
 
-    const fetchData = useCallback((params = undefined) => {
-        setRows([]);
-        if (!hasParams || params !== undefined) {
-            fetch(`/query/${queryName}?${params}`)
-                .then((result) => result.json())
-                .then((data) => {
-                    setRows(data["data"]);
-                });
-        }
-    }, [queryName, hasParams]);
-
-    useEffect(() => fetchData(), [queryName, fetchData]);
     const formStyle = {
         marginBottom: '10px',
         display: 'flex',
@@ -30,7 +18,7 @@ export default function QueryTable({ queryName, hasParams = false }) {
                 queryName={queryName}
                 setParams={(getParamsFun) => getParams = getParamsFun}
             />
-            <Button onClick={() => fetchData(getParams())}
+            <Button onClick={() => setParams(getParams())}
                 style={{margin: '10px'}}
                 variant={"contained"}
                 color="primary"
@@ -43,7 +31,11 @@ export default function QueryTable({ queryName, hasParams = false }) {
     return (
         <>
             {form}
-            <DataDisplay rows={rows} />
+            <DataDisplay 
+                fullDirective={'/query/'+queryName} 
+                params={params} 
+                hasParams={hasParams} 
+            />
         </>
     );
 }
