@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 import json
+from datetime import datetime
 from utils import cursor_result_to_json
 import branchs, shareholder, country, employees, utils, product, product_in_branch, publicity, \
     manufacturer, manufacturer_expenses
@@ -642,10 +643,11 @@ def addProductsToBranch():
     amount = request.args.get('amount')
     price = request.args.get('price')
     branchId = request.args.get('branchId')
-    datee = request.args.get('datee')
+    date = request.args.get('date')
+    date = datetime.strptime(date, '%d-%m-%Y')
     with mysql.connection.cursor() as cursor:
         try:
-            cursor.callproc('addProductsToBranch', [barcode, amount, price, branchId, datee])
+            cursor.callproc('addProductsToBranch', [barcode, amount, price, branchId, date])
             return "success"
         except():
             return "failed"
@@ -658,7 +660,7 @@ def buyProductFromBranch():
     branchId = request.args.get('branchId')
     with mysql.connection.cursor() as cursor:
         try:
-            cursor.callproc('addProductsToBranch', [barcode, amount, branchId])
+            cursor.callproc('buyProductFromBranch', [barcode, amount, branchId])
             return "success"
         except():
             return "failed"
