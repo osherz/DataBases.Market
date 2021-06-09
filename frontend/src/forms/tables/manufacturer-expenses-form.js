@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import AutocompleteComboBox from '../controls/autocomplete-combo-box';
+import AutocompleteComboBox from '../../controls/autocomplete-combo-box';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import {dateNumberToString} from '../utils';
-import './form.css';
+import {dateNumberToString} from '../../utils';
+import '../form.css';
 
 export default function ManufacturerExpensesForm(props) {
     const [manufacturer, seManufacturer] = useState('');

@@ -1,22 +1,43 @@
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import React, { useState, useEffect, useCallback } from "react";
 import DataTable from '../controls/data-table';
+import QueriesSelector from "../forms/queries/queries-selector";
 
-export default function QueryTable({ fullPath }) {
+export default function QueryTable({ queryName, hasParams = false }) {
     const [rows, setRows] = useState([]);
+    let getParams = () => { };
 
-    const fetchData = useCallback(() => {
-        fetch(`/${fullPath}`)
-            .then((result) => result.json())
-            .then((data) => {
-                setRows(data["data"]);
-            });
-    }, [fullPath]);
+    const fetchData = useCallback((params = undefined) => {
+        setRows([]);
+        if (!hasParams || params !== undefined) {
+            fetch(`/query/${queryName}?${params}`)
+                .then((result) => result.json())
+                .then((data) => {
+                    setRows(data["data"]);
+                });
+        }
+    }, [queryName, hasParams]);
 
-    useEffect(() => fetchData(), [fullPath, fetchData]);
-    if (rows.length == 1 && Object.keys(rows[0]).length == 1) {
+    useEffect(() => fetchData(), [queryName, fetchData]);
+    const form = hasParams && (
+            <form style={{marginBottom:'10px'}}>
+                <QueriesSelector
+                    queryName={queryName}
+                    setParams={(getParamsFun) => getParams = getParamsFun}
+                />
+                <Button onClick={()=> fetchData(getParams())} 
+                    variant={"contained"}
+                    color="primary"
+                >
+                    Submit    
+                </Button>
+            </form>
+        );
+
+    let dataDisplayMethod;
+    if (rows.length === 1 && Object.keys(rows[0]).length === 1) {
         const key = Object.keys(rows[0])[0];
-        return (
+        dataDisplayMethod = (
             <div>
                 <Typography variant="h6" noWrap>
                     {key} : {rows[0][key]}
@@ -25,11 +46,18 @@ export default function QueryTable({ fullPath }) {
         );
     }
     else {
-        return (
+        dataDisplayMethod = (
             <DataTable
                 rows={rows}
                 enableManagement={false}
             />
         );
     }
+
+    return (
+        <>
+            {form}
+            {dataDisplayMethod}
+        </>
+    );
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import AutocompleteComboBox from '../controls/autocomplete-combo-box';
+import AutocompleteComboBox from '../../controls/autocomplete-combo-box';
 import Checkbox from '@material-ui/core/Checkbox';
-import './form.css';
+import '../form.css';
 import { FormControlLabel } from '@material-ui/core';
 
 export default function ProductForm(props) {

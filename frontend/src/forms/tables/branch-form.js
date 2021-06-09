@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import './form.css';
+import '../form.css';
 
 export default function BranchForm(props) {
     const [town, setTown] = useState('');

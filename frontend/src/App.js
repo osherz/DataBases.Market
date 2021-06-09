@@ -103,13 +103,25 @@ const customQueries = [
   'total_publicity_cost'
 ];
 
+const customParamsQueries = [
+  'almost_out_of_stock',
+  'publicity_price_of_specific_goal',
+  'prosucts_of_specific_country',
+  'products_of_specific_manu',
+  'list_of_brenchs_in_specific_town',
+  'employees_earn_more_than_x',
+  'almost_out_of_stock_in_country',
+
+];
+
 
 function App() {
   const classes = useStyles();
   const theme = useTheme();
   const [openMenu, setOpenMenu] = useState(true);
   const [tableNameToManage, setTableNameToManage] = useState('');
-  const [queryFullPath, setQueryFullPath] = useState('');
+  const [queryName, setQueryName] = useState('');
+  const [queryHasParams, setQueryHasParams] = useState('');
   const [directive, setDirective] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(MAIN);
 
@@ -120,9 +132,10 @@ function App() {
     setTableNameToManage(tableName);
     setDirective(['Tables', tableName]);
   };
-  const changeQuery = (queryName) => {
+  const changeQuery = (queryName, hasParams=false) => {
     if (currentCategory !== QUERIES) setCurrentCategory(QUERIES);
-    setQueryFullPath('query/' + queryName);
+    setQueryName(queryName);
+    setQueryHasParams(hasParams);
     setDirective(['Queries', queryName]);
   };
 
@@ -142,7 +155,7 @@ function App() {
   const mainDisplay = {
     [MAIN]: <MainPage />,
     [MANAGEMENT]: <TableManagement tableName={tableNameToManage} />,
-    [QUERIES]: <QueryTable fullPath={queryFullPath} />
+    [QUERIES]: <QueryTable queryName={queryName} hasParams={queryHasParams} />
   }
 
   return (
@@ -193,9 +206,10 @@ function App() {
         </div>
         <Divider />
         <List>
-        <ListItem button key="main" onClick={() => setCurrentCategory(MAIN)}>
-              <ListItemText primary="Main" />
-            </ListItem>
+          <ListItem button key="main" onClick={() => setCurrentCategory(MAIN)}>
+            <ListItemText primary="Main" />
+          </ListItem>
+          <Divider />
           <ListSubheader component="div" id="tables-to-manage-subheader">
             Tables To Manage
           </ListSubheader>
@@ -209,9 +223,20 @@ function App() {
         <ListSubheader component="div" id="custom-queries-subheader">
           Custom Queries
         </ListSubheader>
-        <List >
+        <List>
           {customQueries.map((text, index) => (
-            <ListItem button key={text} onClick={() => changeQuery(text)}>
+            <ListItem button key={text} onClick={() => changeQuery(text, false)}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <ListSubheader component="div" id="custom-queries-subheader">
+          Custom Params Queries
+        </ListSubheader>
+        <List >
+          {customParamsQueries.map((text, index) => (
+            <ListItem button key={text} onClick={() => changeQuery(text, true)}>
               <ListItemText primary={text} />
             </ListItem>
           ))}

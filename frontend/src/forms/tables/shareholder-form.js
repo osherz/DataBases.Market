@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import './form.css';
+import '../form.css';
 
 export default function ShareholderForm(props) {
     const [email, setEmail] = useState('');

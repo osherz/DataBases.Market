@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FormControlLabel } from '@material-ui/core';
-import './form.css';
-import AutocompleteComboBox from '../controls/autocomplete-combo-box';
+import '../form.css';
+import AutocompleteComboBox from '../../controls/autocomplete-combo-box';
 
 export default function EmployeeForm(props) {
     const [email, setEmail] = useState('');
@@ -11,7 +11,7 @@ export default function EmployeeForm(props) {
     const [salary, setSalary] = useState();
     const [seniority, setSeniority] = useState();
     const [job, setJob] = useState('');
-    const [isManager, setIsManager] = useState('');
+    const [isManager, setIsManager] = useState(false);
     const [branch, setBranch] = useState('');
 
     props.setParams(() => `name=${name}&EMAIL=${email}&BARNCH_ID=${branch['ID']}&JOB=${job}&SENIORITY=${seniority}&SALARY=${salary}&is_manager=${isManager}`);

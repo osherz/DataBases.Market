@@ -1,13 +1,13 @@
 import React from 'react';
-import ManufacturerForm from './manufacturer-form';
-import CountryForm from './country-form';
-import ManufacturerExpensesForm from './manufacturer-expenses-form';
-import ShareholderForm from './shareholder-form';
-import PublicityForm from './publicity';
-import ProductInBranchForm from './product-in-branch-form';
-import BranchForm from './branch-form';
-import EmployeeForm from './employee-form';
-import ProductForm from './product-form';
+import ManufacturerForm from './tables/manufacturer-form';
+import CountryForm from './tables/country-form';
+import ManufacturerExpensesForm from './tables/manufacturer-expenses-form';
+import ShareholderForm from './tables/shareholder-form';
+import PublicityForm from './tables/publicity';
+import ProductInBranchForm from './tables/product-in-branch-form';
+import BranchForm from './tables/branch-form';
+import EmployeeForm from './tables/employee-form';
+import ProductForm from './tables/product-form';
 
 /**
  * 
