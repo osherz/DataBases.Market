@@ -19,20 +19,26 @@ export default function QueryTable({ queryName, hasParams = false }) {
     }, [queryName, hasParams]);
 
     useEffect(() => fetchData(), [queryName, fetchData]);
+    const formStyle = {
+        marginBottom: '10px',
+        display: 'flex',
+        flexDirection:'row'
+    }
     const form = hasParams && (
-            <form style={{marginBottom:'10px'}}>
-                <QueriesSelector
-                    queryName={queryName}
-                    setParams={(getParamsFun) => getParams = getParamsFun}
-                />
-                <Button onClick={()=> fetchData(getParams())} 
-                    variant={"contained"}
-                    color="primary"
-                >
-                    Submit    
+        <div style={formStyle}>
+            <QueriesSelector
+                queryName={queryName}
+                setParams={(getParamsFun) => getParams = getParamsFun}
+            />
+            <Button onClick={() => fetchData(getParams())}
+                style={{margin: '10px'}}
+                variant={"contained"}
+                color="primary"
+            >
+                Submit
                 </Button>
-            </form>
-        );
+        </div>
+    );
 
     let dataDisplayMethod;
     if (rows.length === 1 && Object.keys(rows[0]).length === 1) {
