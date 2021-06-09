@@ -1,6 +1,6 @@
-import { Button, Typography } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import React, { useState, useEffect, useCallback } from "react";
-import DataTable from '../controls/data-table';
+import DataDisplay from "../controls/data-display";
 import QueriesSelector from "../forms/queries/queries-selector";
 
 export default function QueryTable({ queryName, hasParams = false }) {
@@ -40,30 +40,10 @@ export default function QueryTable({ queryName, hasParams = false }) {
         </div>
     );
 
-    let dataDisplayMethod;
-    if (rows.length === 1 && Object.keys(rows[0]).length === 1) {
-        const key = Object.keys(rows[0])[0];
-        dataDisplayMethod = (
-            <div>
-                <Typography variant="h6" noWrap>
-                    {key} : {rows[0][key]}
-                </Typography>
-            </div>
-        );
-    }
-    else {
-        dataDisplayMethod = (
-            <DataTable
-                rows={rows}
-                enableManagement={false}
-            />
-        );
-    }
-
     return (
         <>
             {form}
-            {dataDisplayMethod}
+            <DataDisplay rows={rows} />
         </>
     );
 }
