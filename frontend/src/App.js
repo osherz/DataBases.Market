@@ -13,6 +13,8 @@ import TableManagement from './pages/table-management';
 import './App.css';
 import QueryTable from './pages/query-table';
 import MainPage from './pages/main-page';
+import DataDisplay from './controls/data-display';
+import ProcedureSelector from './forms/procedures/procedures-selector';
 
 const drawerWidth = 240;
 
@@ -76,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
 const MAIN = 'main';
 const MANAGEMENT = 'management';
 const QUERIES = 'queries';
+const VIEWS = 'views';
+const PROCEDURES = 'procedures';
 
 const customQueries = [
   'avg_country_price',
@@ -117,7 +121,25 @@ const customParamsQueries = [
 const views = [
   'almost_out_of_stock_view',
   'branch_manu_prod_amount_view'
-]
+];
+
+const tablesNames = [
+  'product',
+  'employees',
+  'branchs',
+  'country',
+  'manufacturer',
+  'manufacturer_expenses',
+  'product_in_branch',
+  'publicity',
+  'shareholder'
+];
+
+const procedures = [
+  'addProductsToBranch',
+  'buyProductFromBranch'
+];
+
 
 function App() {
   const classes = useStyles();
@@ -125,6 +147,8 @@ function App() {
   const [openMenu, setOpenMenu] = useState(true);
   const [tableNameToManage, setTableNameToManage] = useState('');
   const [queryName, setQueryName] = useState('');
+  const [viewName, setViewName] = useState('');
+  const [procedureName, setProcedureName] = useState('');
   const [queryHasParams, setQueryHasParams] = useState('');
   const [directive, setDirective] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(MAIN);
@@ -136,30 +160,33 @@ function App() {
     setTableNameToManage(tableName);
     setDirective(['Tables', tableName]);
   };
-  const changeQuery = (queryName, hasParams=false) => {
+  const changeQuery = (queryName, hasParams = false) => {
     if (currentCategory !== QUERIES) setCurrentCategory(QUERIES);
     setQueryName(queryName);
     setQueryHasParams(hasParams);
     setDirective(['Queries', queryName]);
   };
 
+  const changeView = (viewName) => {
+    if (currentCategory !== VIEWS) setCurrentCategory(VIEWS);
+    setViewName(viewName);
+    setDirective(['Views', viewName]);
+  };
+
+  const changeProcedure = (procedureName) => {
+    if (currentCategory !== PROCEDURES) setCurrentCategory(PROCEDURES);
+    setProcedureName(procedureName);
+    setDirective(['procedure', procedureName]);
+  };
+
   const barHeader = "Market Data Management";
-  const tablesNames = [
-    'product',
-    'employees',
-    'branchs',
-    'country',
-    'manufacturer',
-    'manufacturer_expenses',
-    'product_in_branch',
-    'publicity',
-    'shareholder'
-  ];
 
   const mainDisplay = {
     [MAIN]: <MainPage />,
     [MANAGEMENT]: <TableManagement tableName={tableNameToManage} />,
-    [QUERIES]: <QueryTable queryName={queryName} hasParams={queryHasParams} />
+    [QUERIES]: <QueryTable queryName={queryName} hasParams={queryHasParams} />,
+    [VIEWS]: <DataDisplay fullDirective={'/view/' + viewName} />,
+    [PROCEDURES]: <ProcedureSelector procedureName={procedureName} />
   }
 
   return (
@@ -241,6 +268,28 @@ function App() {
         <List >
           {customParamsQueries.map((text, index) => (
             <ListItem button key={text} onClick={() => changeQuery(text, true)}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <ListSubheader component="div" id="custom-queries-subheader">
+          Views
+        </ListSubheader>
+        <List >
+          {views.map((text, index) => (
+            <ListItem button key={text} onClick={() => changeView(text)}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <ListSubheader component="div" id="custom-queries-subheader">
+          Procedures
+        </ListSubheader>
+        <List >
+          {procedures.map((text, index) => (
+            <ListItem button key={text} onClick={() => changeProcedure(text)}>
               <ListItemText primary={text} />
             </ListItem>
           ))}

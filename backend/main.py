@@ -642,9 +642,9 @@ def addProductsToBranch():
     barcode = request.args.get('barcode')
     amount = request.args.get('amount')
     price = request.args.get('price')
-    branchId = request.args.get('branchId')
+    branchId = request.args.get('branch_id')
     date = request.args.get('date')
-    date = datetime.strptime(date, '%d-%m-%Y')
+    date = datetime.strptime(date, '%Y-%m-%d')
     with mysql.connection.cursor() as cursor:
         try:
             cursor.callproc('addProductsToBranch', [barcode, amount, price, branchId, date])
@@ -657,7 +657,7 @@ def addProductsToBranch():
 def buyProductFromBranch():
     barcode = request.args.get('barcode')
     amount = request.args.get('amount')
-    branchId = request.args.get('branchId')
+    branchId = request.args.get('branch_id')
     with mysql.connection.cursor() as cursor:
         try:
             cursor.callproc('buyProductFromBranch', [barcode, amount, branchId])
