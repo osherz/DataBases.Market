@@ -106,7 +106,7 @@ const customQueries = [
 const customParamsQueries = [
   'almost_out_of_stock',
   'publicity_price_of_specific_goal',
-  'prosucts_of_specific_country',
+  'products_of_specific_country',
   'products_of_specific_manu',
   'list_of_brenchs_in_specific_town',
   'employees_earn_more_than_x',

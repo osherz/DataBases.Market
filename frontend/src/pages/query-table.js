@@ -22,7 +22,7 @@ export default function QueryTable({ queryName, hasParams = false }) {
     const formStyle = {
         marginBottom: '10px',
         display: 'flex',
-        flexDirection:'row'
+        flexDirection:'row',
     }
     const form = hasParams && (
         <div style={formStyle}>

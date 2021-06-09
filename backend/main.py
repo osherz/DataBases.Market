@@ -583,7 +583,7 @@ def almost_out_of_stock_in_country():
 
 @app.route('/query/products_of_specific_manu')  #
 def products_of_specific_manu():
-    manu = '"' + str(request.args.get('manu')) + '"'
+    manu = '"' + str(request.args.get('manu_name')) + '"'
     with open(r"param/products_of_specific_manu.sql") as query:
         with mysql.connection.cursor() as cursor:
             temp = query.read().replace(":manu_name", manu)
@@ -592,10 +592,10 @@ def products_of_specific_manu():
     return jsonify({'data': result})
 
 
-@app.route('/query/prosucts_of_specific_country')  #
+@app.route('/query/products_of_specific_country')  #
 def prosucts_of_specific_country():
     country_name = '"' + str(request.args.get('country_name')) + '"'
-    with open(r"param/prosucts_of_specific_country.sql") as query:
+    with open(r"param/products_of_specific_country.sql") as query:
         with mysql.connection.cursor() as cursor:
             temp = query.read().replace(":country_name", country_name)
             cursor.execute(temp)
