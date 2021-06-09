@@ -41,8 +41,12 @@ def branchs_select():
 @app.route('/branchs/delete')
 def delete_row():
     id = request.args.get('ID')
-    utils.delete_from_table(mysql, "branchs", id)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "branchs", id)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -53,8 +57,12 @@ def branchs_update():
     revenue = request.args.get('revenue')
     address = request.args.get('address')
     area = request.args.get('area')
-    branchs.update(mysql, id, town, revenue, address, area)
-    return "success"
+    try:
+        branchs.update(mysql, id, town, revenue, address, area)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Insert
@@ -65,8 +73,12 @@ def branchs_insert():
     revenue = request.args.get('revenue')
     address = request.args.get('address')
     area = request.args.get('area')
-    branchs.insert(mysql, town, revenue, address, area)
-    return "success"
+    try:
+        branchs.insert(mysql, town, revenue, address, area)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- Employee --------------------------------------
@@ -81,8 +93,12 @@ def employees_select():
 @app.route('/employees/delete')
 def employees_delete_row():
     id = request.args.get('ID')
-    utils.delete_from_table(mysql, "employees", id)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "employees", id)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -96,8 +112,12 @@ def employees_update():
     branch_id = request.args.get('BARNCH_ID')
     job = request.args.get('JOB')
     is_manager = request.args.get('is_manager')
-    employees.update(mysql, id, name, email, salary, seniority, branch_id, job, is_manager)
-    return "success"
+    try:
+        employees.update(mysql, id, name, email, salary, seniority, branch_id, job, is_manager)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Insert
@@ -110,8 +130,12 @@ def employees_insert():
     branch_id = request.args.get('BARNCH_ID')
     job = request.args.get('JOB')
     is_manager = request.args.get('is_manager')
-    employees.insert(mysql, name, email, salary, seniority, branch_id, job, is_manager)
-    return "success"
+    try:
+        employees.insert(mysql, name, email, salary, seniority, branch_id, job, is_manager)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- Country --------------------------------------
@@ -127,16 +151,24 @@ def country_select():
 @app.route('/country/delete')
 def country_delete_row():
     id = request.args.get('id')
-    utils.delete_from_table(mysql, "country", id)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "country", id)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # insert
 @app.route('/country/insert')
 def country_insert():
     name = request.args.get('country_name')
-    country.insert(mysql, name)
-    return 'success'
+    try:
+        country.insert(mysql, name)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -144,8 +176,12 @@ def country_insert():
 def country_update():
     id = request.args.get('id')
     name = request.args.get('country_name')
-    country.update(mysql, id, name)
-    return 'success'
+    try:
+        country.update(mysql, id, name)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- manufacturer --------------------------------------
@@ -161,8 +197,12 @@ def manufacturer_select():
 @app.route('/manufacturer/delete')
 def manufacturer_delete_row():
     id = request.args.get('id')
-    utils.delete_from_table(mysql, "Manufacturer", id)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "Manufacturer", id)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # insert
@@ -170,8 +210,12 @@ def manufacturer_delete_row():
 def manufacturer_insert():
     countryid = request.args.get('countryid')
     name = request.args.get('name')
-    manufacturer.insert(mysql, name, countryid)
-    return 'success'
+    try:
+        manufacturer.insert(mysql, name, countryid)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -180,8 +224,12 @@ def manufacturer_update():
     id = request.args.get('id')
     countryid = request.args.get('countryid')
     name = request.args.get('name')
-    manufacturer.update(mysql, id, name, countryid)
-    return 'success'
+    try:
+        manufacturer.update(mysql, id, name, countryid)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- manufacturer_expenses --------------------------------------
@@ -197,8 +245,12 @@ def manufacturer_expenses_select():
 @app.route('/manufacturer_expenses/delete')
 def manufacturer_expenses_delete_row():
     id = request.args.get('id')
-    utils.delete_from_table(mysql, "manufacturer_expenses", id)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "manufacturer_expenses", id)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # insert
@@ -207,8 +259,12 @@ def manufacturer_expenses_insert():
     manufacturer_id = request.args.get('manufacturer_id')
     expenses = request.args.get('expenses')
     date_of_expenses = request.args.get('date_of_expenses')
-    manufacturer_expenses.insert(mysql, manufacturer_id, expenses, date_of_expenses)
-    return 'success'
+    try:
+        manufacturer_expenses.insert(mysql, manufacturer_id, expenses, date_of_expenses)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -218,8 +274,12 @@ def manufacturer_expenses_update():
     manufacturer_id = request.args.get('manufacturer_id')
     expenses = request.args.get('expenses')
     date_of_expenses = request.args.get('date_of_expenses')
-    manufacturer_expenses.update(mysql, id, manufacturer_id, expenses, date_of_expenses)
-    return 'success'
+    try:
+        manufacturer_expenses.update(mysql, id, manufacturer_id, expenses, date_of_expenses)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- product --------------------------------------
@@ -235,8 +295,12 @@ def product_select():
 @app.route('/product/delete')
 def product_delete_row():
     barcode = request.args.get('barcode')
-    utils.delete_from_table(mysql, "product", barcode, 'barcode')
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "product", barcode, 'barcode')
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -251,9 +315,13 @@ def product_update():
     bIsWeighted = request.args.get('bIsWeighted')
     QtyInPackage = request.args.get('QtyInPackage')
     ItemPrice = request.args.get('ItemPrice')
-    product.update(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
-                   ItemPrice)
-    return "success"
+    try:
+        product.update(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+                       ItemPrice)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Insert
@@ -268,9 +336,13 @@ def product_insert():
     bIsWeighted = request.args.get('bIsWeighted')
     QtyInPackage = request.args.get('qtyInPackage')
     ItemPrice = request.args.get('itemPrice')
-    product.insert(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
-                   ItemPrice)
-    return "success"
+    try:
+        product.insert(mysql, barcode, name, manufacturld, description, unitQty, Quantity, bIsWeighted, QtyInPackage,
+                       ItemPrice)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- product_in_branch --------------------------------------
@@ -286,8 +358,12 @@ def product_in_branch_select():
 @app.route('/product_in_branch/delete')
 def product_in_branch_delete_row():
     id = request.args.get('id')
-    utils.delete_from_table(mysql, "product_in_branch", id)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "product_in_branch", id)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -297,8 +373,12 @@ def product_in_branch_update():
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    product_in_branch.update(mysql, id, branch_id, product_barcode, amount_in_stock)
-    return "success"
+    try:
+        product_in_branch.update(mysql, id, branch_id, product_barcode, amount_in_stock)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Insert
@@ -307,8 +387,12 @@ def product_in_branch_insert():
     branch_id = request.args.get('branch_id')
     product_barcode = request.args.get('product_barcode')
     amount_in_stock = request.args.get('amount_in_stock')
-    product_in_branch.insert(mysql, branch_id, product_barcode, amount_in_stock)
-    return "success"
+    try:
+        product_in_branch.insert(mysql, branch_id, product_barcode, amount_in_stock)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- publicity--------------------------------------
@@ -324,8 +408,12 @@ def publicity_select():
 @app.route('/publicity/delete')
 def publicity_delete_row():
     id = request.args.get('id')
-    utils.delete_from_table(mysql, "publicity", id)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "publicity", id)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -335,8 +423,12 @@ def publicity_update():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    publicity.update(mysql, id, price, location, goal)
-    return "success"
+    try:
+        publicity.update(mysql, id, price, location, goal)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Insert
@@ -345,8 +437,12 @@ def publicity_insert():
     price = request.args.get('price')
     location = request.args.get('location')
     goal = request.args.get('goal')
-    publicity.insert(mysql, price, location, goal)
-    return "success"
+    try:
+        publicity.insert(mysql, price, location, goal)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # -------------------------------------- shareholder--------------------------------------
@@ -362,8 +458,12 @@ def shareholder_select():
 @app.route('/shareholder/delete')
 def shareholder_delete_row():
     ID = request.args.get('ID')
-    utils.delete_from_table(mysql, "shareholder", ID)
-    return "success"
+    try:
+        utils.delete_from_table(mysql, "shareholder", ID)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Update
@@ -373,8 +473,12 @@ def shareholder_update():
     STOCK = request.args.get('STOCK')
     EMAIL = request.args.get('EMAIL')
     NAME = request.args.get('NAME')
-    shareholder.update(mysql, ID, STOCK, EMAIL, NAME)
-    return "success"
+    try:
+        shareholder.update(mysql, ID, STOCK, EMAIL, NAME)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # Insert
@@ -383,8 +487,12 @@ def shareholder_insert():
     STOCK = request.args.get('stock')
     EMAIL = request.args.get('email')
     NAME = request.args.get('name')
-    shareholder.insert(mysql, STOCK, EMAIL, NAME)
-    return "success"
+    try:
+        shareholder.insert(mysql, STOCK, EMAIL, NAME)
+        return "success"
+    except Exception as e:
+        print("Problem inserting into db: " + str(e))
+        return "failed"
 
 
 # ************************************************************************************************

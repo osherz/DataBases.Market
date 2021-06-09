@@ -3,8 +3,6 @@ from flask import Flask, jsonify, request
 
 
 def execute_action(mysql, query):
-    try:
-        #
         con = mysql.connect
         cursor = con.cursor()
         cursor.execute(query)
@@ -12,9 +10,6 @@ def execute_action(mysql, query):
         cursor.close()
         con.close()
         return True
-    except Exception as e:
-        print("Problem inserting into db: " + str(e))
-        return False
 
 
 def cursor_result_to_json(cursor):
