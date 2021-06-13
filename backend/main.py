@@ -52,11 +52,11 @@ def delete_row():
 # Update
 @app.route('/branchs/update')
 def branchs_update():
-    id = request.args.get('id')
-    town = request.args.get('town')
-    revenue = request.args.get('revenue')
-    address = request.args.get('address')
-    area = request.args.get('area')
+    id = request.args.get('ID')
+    town = request.args.get('TOWN')
+    revenue = request.args.get('REVENUE')
+    address = request.args.get('ADDRESS')
+    area = request.args.get('AREA')
     try:
         branchs.update(mysql, id, town, revenue, address, area)
         return "success"
