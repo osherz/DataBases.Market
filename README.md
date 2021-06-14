@@ -1,5 +1,8 @@
 # DataBases.Market
 
+A part of a Mini Project in Data Bases (course).
+We had to develop a simple app to interact with the data base.
+
 ### First configuration:
 (Make sure you have NPM installed)
 
